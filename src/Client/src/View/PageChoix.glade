@@ -16,7 +16,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="clientChoiceCollabore" swapped="no"/>
+            <signal name="clicked" handler="colaboration" swapped="no"/>
           </object>
           <packing>
             <property name="x">81</property>
@@ -31,7 +31,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="clientChoiceBetray" swapped="no"/>
+            <signal name="clicked" handler="trahison" swapped="no"/>
           </object>
           <packing>
             <property name="x">268</property>

@@ -41,10 +41,11 @@
         </child>
         <child>
           <object class="GtkButton" id="btnOk">
-            <property name="label" translatable="yes">J'ai pris connaissance des réésultats</property>
+            <property name="label" translatable="yes">J'ai pris connaissance des résultats</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <signal name="clicked" handler="finResutats" swapped="no"/>
           </object>
           <packing>
             <property name="x">154</property>
