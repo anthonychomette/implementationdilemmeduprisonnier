@@ -23,7 +23,6 @@ typedef struct {
     int index;
 } connection_t;
 
-
 void init_sockets_array();
 void add(connection_t *connection);
 void del(connection_t *connection);

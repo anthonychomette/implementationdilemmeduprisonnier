@@ -7,10 +7,12 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-
+#include <stdbool.h>
 #include "srvcxnmanager.h"
 
 connection_t* connections[MAXSIMULTANEOUSCLIENTS];
+
+
 
 void init_sockets_array() {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
@@ -64,15 +66,41 @@ void *threadProcess(void *ptr) {
     add(connection);
 
     //Welcome the new client
-    printf("Welcome #%i\n", connection->index);
+    /*printf("Welcome #%i\n", connection->index);
     sprintf(buffer_out, "Welcome #%i\n", connection->index);
     write(connection->sockfd, buffer_out, strlen(buffer_out));
+
+        int *type = buffer_in;
+        printf("Le type est : %d ", *type);
+        if(*type == 1) 
+        {
+            paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
+            memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
+            printf("Le client %d s'est connecté ! ", paquetOK->numClient);
+        }*/
 
     while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
         if (strncmp(buffer_in, "bye", 3) == 0) {
             break;
         }
+
+//Ancien code bon
+
+/*         int *type = buffer_in;
+        printf("Le type est : %d \n", *type);
+        if(*type == 1) 
+        {
+            paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
+            //memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
+            memcpy(paquetOK, buffer_in, sizeof(paquetClientInit));
+            int res = paquetOK->numClient;
+            printf("Le client %d s'est connecté ! \n", res);
+
+        } */
+
+receivePacket(buffer_in);
+
 #if DEBUG
         printf("DEBUG-----------------------------------------------------------\n");
         printf("len : %i\n", len);

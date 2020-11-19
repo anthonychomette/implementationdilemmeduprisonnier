@@ -10,6 +10,7 @@
  *
  */
 
+
 #ifndef CLIENTCXNMANAGER_H
 #define CLIENTCXNMANAGER_H
 
@@ -19,4 +20,3 @@ void *threadProcess(void * ptr);
 int open_connection();
 
 #endif /* CLIENTCXNMANAGER_H */
-
