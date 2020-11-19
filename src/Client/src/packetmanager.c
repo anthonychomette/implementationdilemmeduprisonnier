@@ -264,7 +264,7 @@ void receivePacket(char *buffer_in) {
         break;
     }
     default: {
-        printf("Erreur d'envoi du paquet type non défini !!!");
+        printf("Erreur de reception du paquet type non défini !!!");
         break;
     }
 
