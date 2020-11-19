@@ -11,6 +11,7 @@
  * Created on November 18, 2020, 9:17 AM
  */
 
+
 #ifndef ENVOICLIENTTOSERV_H
 #define ENVOICLIENTTOSERV_H
 
@@ -26,19 +27,23 @@ extern "C" {
 #endif
 
 //Envoi infos de connexion
-////void clientInitClient();
+void clientInitClient(int sockfd, int clientID);
 ////envoi d'un packetClientInit 
 
-//Envoi les clients sont ils prets
-////void clientPlayerReady();
-////envoi d'un packetClientPlayerReady
+//Envoi le client attend une partie
+void ClientWaitingGame(int sockfd);
+////envoi d'un packetClientWaitingGame
+
+//Envoi le player est prêt
+void clientPlayerReady(int sockfd);
+////envoi d'un packet ClientPlayerReady
 
 //Envoi du choix  collaborer
-////void clientChoiceCollabore();
+void clientChoiceCollabore(int sockfd);
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour collaborer bool choice = 0   (à vérifier dans la structure)
 //Envoi du choix trahir
-////void clientChoiceBetray();
+void clientChoiceBetray(int sockfd);
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour trahir bool choice = 1       (à vérifier dans la structure)
 

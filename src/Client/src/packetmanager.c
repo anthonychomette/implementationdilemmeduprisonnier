@@ -15,7 +15,6 @@ packetClientInit * createPacketClientInit(int clientID) {
 
     clientInit->type = 1; //Type 1 Message je suis connecté et je suis le client X
     clientInit->numClient = clientID;
-    clientInit->clientReady = true;
 
     return clientInit;
 }
@@ -117,85 +116,6 @@ packetServerScore * createPacketServerScore(int score) {
     return Score;
 }
 
-/**
- * @brief Fonction qui envoie les données
- * 
- * @param sockfd Socket sur lequel envoyer les données 
- * @param packetType Type du paquet
- * @param option Option pour créer le paquet  
- */
-void sendPacket(int sockfd, int packetType, int option) {
-    switch (packetType)
-    {
-    case 1: {
-        packetClientInit *packetCInit = createPacketClientInit(option);
-        write(sockfd, packetCInit, sizeof(packetCInit));
-        free(packetCInit);
-        break;
-    }
-     case 2: {
-        packetClientWaitingGame *packetCWaitingGame = createPacketClientWaitingGame();
-        write(sockfd, packetCWaitingGame, sizeof(packetCWaitingGame));
-        free(packetCWaitingGame);
-        break;
-    }
-    case 3: {
-        packetClientPlayerReady *packetCPlayerReady = createPacketClientPlayerReady();
-        write(sockfd, packetCPlayerReady, sizeof(packetCPlayerReady));
-        free(packetCPlayerReady);
-        break;
-    }
-    case 4: {
-        packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(option);
-        write(sockfd, packetCPlayerChoice, sizeof(packetCPlayerChoice));
-        free(packetCPlayerChoice);
-        break;
-    }
-    case 10: {
-        packetServerInit *packetSInit = createPacketServerInit();
-        write(sockfd, packetSInit, sizeof(packetSInit));
-        free(packetSInit);
-        break;
-    }
-    case 11: {
-        packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-        write(sockfd, packetSWaitingEnd, sizeof(packetSWaitingEnd));
-        free(packetSWaitingEnd);
-        break;
-    }
-    case 12: {
-        packetServerIsPlayerReady *packetSIsPlayerReady= createPacketServerIsPlayerReady();
-        write(sockfd, packetSIsPlayerReady, sizeof(packetSIsPlayerReady));
-        free(packetSIsPlayerReady);
-        break;
-    }
-    case 13: {
-        packetServerMakeChoice *packetSMakeChoice = createPacketServerMakeChoice();
-        write(sockfd, packetSMakeChoice, sizeof(packetSMakeChoice));
-        free(packetSMakeChoice);
-        break;
-    }
-    case 14: {
-        packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(option);
-        write(sockfd, packetSIsThisTheEnd, sizeof(packetSIsThisTheEnd));
-        free(packetSIsThisTheEnd);
-        break;
-    }
-    case 15: {
-        packetServerScore *packetSScore = createPacketServerScore(option);
-        write(sockfd, packetSScore, sizeof(packetSScore));
-        free(packetSScore);
-        break;
-    }
-    default: {
-        printf("Erreur d'envoi du paquet type non défini !!!");
-        break;
-        }
-    }
-}
-
-
-
 void receivePacket(char *buffer_in) {
 
     int *type = buffer_in;
@@ -264,7 +184,7 @@ void receivePacket(char *buffer_in) {
         break;
     }
     default: {
-        printf("Erreur de reception du paquet type non défini !!!");
+        perror("Erreur de reception du paquet : type non défini !!!");
         break;
     }
 

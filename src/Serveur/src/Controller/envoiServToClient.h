@@ -11,6 +11,8 @@
  * Created on November 19, 2020, 8:46 AM
  */
 
+#include "packetmanager.h"
+
 #ifndef ENVOISERVTOCLIENT_H
 #define ENVOISERVTOCLIENT_H
 
@@ -26,23 +28,23 @@ extern "C" {
 #endif
 
 //Envoi de la partie a faire êtes vous prets ?
-////void serverIsPlayerReady();
+void serverIsPlayerReady();
 ////packetServerIsPlayerReady
 
 //Envoi attend l'autre joueur
-//// void serverWaitingEnd();
+void serverWaitingEnd();
 //// envoi d'un packetServerWaitingEnd
 
 //Envoi début partie
-////void serverMakeChoice();
+void serverMakeChoice();
 //// envoi d'un packetServerMakeChoice
 
 //Envoi résultats
-////void serverScore();
+void serverScore();
 //// envoi d'un packetServerScore
 
 //Envoi fin du round ou continuer
-////void serverIsThisTheEnd();
+void serverIsThisTheEnd();
 //// envoi d'un packetServerIsThisTheEnd
 
 #endif /* ENVOISERVTOCLIENT_H */

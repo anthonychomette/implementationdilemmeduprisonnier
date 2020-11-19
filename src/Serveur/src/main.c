@@ -23,6 +23,7 @@
 #include <stdbool.h>
 
 #include "srvcxnmanager.h"
+#include <netinet/tcp.h>
 
 /*
  *
@@ -39,6 +40,10 @@ int main(int argc, char** argv) {
     init_sockets_array();
     /* create socket */
     sockfd = create_server_socket();
+
+    //Disable Nagle's Algorithm that causes problem for sending data
+    int flag = 1; 
+    setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, (char *) &flag, sizeof(int));
 
     /* listen on port , stack size 50 for incoming connections*/
     if (listen(sockfd, 50) < 0) {

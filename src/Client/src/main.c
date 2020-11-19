@@ -22,6 +22,7 @@
 
 #include "clientcxnmanager.h"
 #include "packetmanager.h"
+#include "Controller/envoiClientToServ.h"
 
 
 /*
@@ -29,42 +30,19 @@
  */
 int main(int argc, char** argv) {
 
+    //recuperation du clientID depuis le fichier de conf
+    int clientID = 4;
+    int socketfd = createSocket();
 
-    int sockfd;
-    int status = 0;
-    char bufferOut[500];
-    pthread_t thread;
+    //Envoi d'un paquet d'Init
+    clientInitClient(socketfd, clientID);
 
-    sockfd = open_connection();
+    usleep(10000); //Pause de 10 ms ne pas utiliser
 
-    //paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
-    //paquetClientInit *paquetOK;
+    //Envoi d'un paquet d'Attente
+    ClientWaitingGame(socketfd);
 
-
-    //Ancien Code bon ! packetClientInit *paquetOK = createPacketClientInit(42);
-    //Ancien Code bon ! write(sockfd, paquetOK, sizeof(paquetOK));
-
-    //strcpy(msg, "Hello from Xeon"); //Xeon is the name of the this client
-    //printf("sending : %s\n", msg);
-    
-    //memcpy(bufferOut, paquetOK, sizeof(paquetOK));
-    
-    //bufferOut = paquetOK;
-    //write(sockfd, bufferOut, strlen(bufferOut));
-
-    sendPacket(sockfd, 1, 42);
-
-    //Creation d'un pthread de lecture
-    pthread_create(&thread, 0, threadProcess, &sockfd);
-    //write(connection->sock,"Main APP Still running",15);
-    pthread_detach(thread);
-    do {
-        fgets(bufferOut, 100, stdin);
-        //printf("sending : %s\n", msg);
-        status = write(sockfd, bufferOut, strlen(bufferOut));
-        //memset(msg,'\0',100);
-    } while (status != -1);
-
+    createPthread(socketfd);
     return (EXIT_SUCCESS);
 }
 

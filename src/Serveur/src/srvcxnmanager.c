@@ -81,6 +81,8 @@ void *threadProcess(void *ptr) {
 
     while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
+        printf("*****************\n");
+
         if (strncmp(buffer_in, "bye", 3) == 0) {
             break;
         }

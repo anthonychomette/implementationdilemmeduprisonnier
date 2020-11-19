@@ -213,6 +213,7 @@ void receivePacket(char *buffer_in) {
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
+        printf("Le client est en attente: %d\n\n", packetCWaitingGame->type);
         free(packetCWaitingGame);
         break;
     }
