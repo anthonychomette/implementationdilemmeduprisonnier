@@ -11,6 +11,8 @@
  * Created on November 18, 2020, 9:17 AM
  */
 
+#include "packetmanager.h"
+
 #ifndef ENVOICLIENTTOSERV_H
 #define ENVOICLIENTTOSERV_H
 
@@ -26,19 +28,19 @@ extern "C" {
 #endif
 
 //Envoi infos de connexion
-////void clientInitClient();
+void clientInitClient();
 ////envoi d'un packetClientInit 
 
 //Envoi les clients sont ils prets
-////void clientPlayerReady();
+void clientPlayerReady();
 ////envoi d'un packetClientPlayerReady
 
 //Envoi du choix  collaborer
-////void clientChoiceCollabore();
+void clientChoiceCollabore();
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour collaborer bool choice = 0   (à vérifier dans la structure)
 //Envoi du choix trahir
-////void clientChoiceBetray();
+void clientChoiceBetray();
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour trahir bool choice = 1       (à vérifier dans la structure)
 

@@ -10,6 +10,7 @@
  *
  * Created on November 18, 2020, 9:18 AM
  */
+#include "packetmanager.h"
 
 #ifndef RECEPTIONSERVTOCLIENT_H
 #define RECEPTIONSERVTOCLIENT_H
@@ -23,19 +24,19 @@ extern "C" {
 #endif
 
 //Reception de la partie a faire êtes vous prets ?
-////void serverIsPlayerReady(packetServerIsPlayerReady packet);
+void serverIsPlayerReady(packetServerIsPlayerReady packet);
 
 //Reception attend l'autre joueur
-//// void serverWaitingEnd(packetServerWaitingEnd packet);
+void serverWaitingEnd(packetServerWaitingEnd packet);
 
 //Reception début partie
-////void serverMakeChoice(packetServerMakeChoice packet);
+void serverMakeChoice(packetServerMakeChoice packet);
 
 //Reception résultats
-////void serverScore(packetServerScore packet);
+void serverScore(packetServerScore packet);
 
 //Reception fin du round ou continuer
-////void serverIsThisTheEnd(packetServerIsThisTheEnd packet);
+void serverIsThisTheEnd(packetServerIsThisTheEnd packet);
 
 #endif /* RECEPTIONSERVTOCLIENT_H */
 
