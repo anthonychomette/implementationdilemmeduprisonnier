@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     int status = 0;
     char bufferOut[500];
     pthread_t thread;
-
+    config();
     sockfd = open_connection();
 
     //paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
