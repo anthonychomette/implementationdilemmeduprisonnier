@@ -24,13 +24,13 @@ extern "C" {
 #endif
 
 //Reception de la partie a faire êtes vous prets ?
-void serverIsPlayerReady(packetServerIsPlayerReady packet);
+void serverIsPlayerReady();
 
 //Reception attend l'autre joueur
-void serverWaitingEnd(packetServerWaitingEnd packet);
+void serverWaitingEnd();
 
 //Reception début partie
-void serverMakeChoice(packetServerMakeChoice packet);
+void serverMakeChoice();
 
 //Reception résultats
 void serverScore(packetServerScore packet);
