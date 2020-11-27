@@ -36,15 +36,19 @@ void serverWaitingEnd();
 //// envoi d'un packetServerWaitingEnd
 
 //Envoi début partie
-void serverMakeChoice();
+void serverMakeChoice(int sockfd);
 //// envoi d'un packetServerMakeChoice
 
 //Envoi résultats
-void serverScore();
+void serverScore(int sockfd);
 //// envoi d'un packetServerScore
 
-//Envoi fin du round ou continuer
-void serverIsThisTheEnd();
+//Envoi fin du round 
+void serverIsThisTheEnd(int sockfd);
+//// envoi d'un packetServerIsThisTheEnd
+
+//Envoi  continuer
+void serverIsNotThisTheEnd(int sockfd);
 //// envoi d'un packetServerIsThisTheEnd
 
 #endif /* ENVOISERVTOCLIENT_H */
