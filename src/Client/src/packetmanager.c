@@ -156,18 +156,21 @@ void receivePacket(char *buffer_in) {
     case 11: {
         packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
         memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
+        serverWaitingEnd();
         free(packetSWaitingEnd);
         break;
     }
     case 12: {
         packetServerIsPlayerReady *packetSIsPlayerReady= malloc(1 * sizeof(packetServerIsPlayerReady));
         memcpy(packetSIsPlayerReady, buffer_in, sizeof(packetServerIsPlayerReady));
+        serverIsPlayerReady()
         free(packetSIsPlayerReady);
         break;
     }
     case 13: {
         packetServerMakeChoice *packetSMakeChoice = malloc(1 * sizeof(packetServerMakeChoice));
         memcpy(packetSMakeChoice, buffer_in, sizeof(packetServerMakeChoice));
+        serverMakeChoice();
         free(packetSMakeChoice);
         break;
     }
@@ -180,6 +183,7 @@ void receivePacket(char *buffer_in) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
+        serverScore()
         free(packetSScore);
         break;
     }

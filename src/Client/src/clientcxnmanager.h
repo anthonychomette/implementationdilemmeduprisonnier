@@ -18,7 +18,7 @@
 
 void *threadProcess(void * ptr);
 int open_connection();
-int createSocket();
+//int createSocket();
 void createPthread(int sockfd);
 
 #endif /* CLIENTCXNMANAGER_H */

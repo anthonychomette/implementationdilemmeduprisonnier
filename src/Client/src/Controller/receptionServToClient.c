@@ -9,8 +9,8 @@
 #include <stdbool.h>
 #include <gtk/gtk.h>
 
-#include "src/packetmanager.h"
-#include "receptionServToClient.h"
+#include "../packetmanager.h"
+//#include "receptionServToClient.h"
 
 GtkBuilder *builder = NULL;
 

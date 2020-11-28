@@ -59,10 +59,10 @@ int open_connection() {
     return sockfd;
 }
 
-int createSocket() {
+/* int createSocket() {
     int sockfd = open_connection();
     return sockfd;
-}
+} */
 
 void createPthread(int sockfd) {
 

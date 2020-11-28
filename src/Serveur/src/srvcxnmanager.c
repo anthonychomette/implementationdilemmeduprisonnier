@@ -9,6 +9,8 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include "srvcxnmanager.h"
+#include <netinet/tcp.h>
+
 
 connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
@@ -176,3 +178,4 @@ int create_server_socket() {
 
     return sockfd;
 }
+

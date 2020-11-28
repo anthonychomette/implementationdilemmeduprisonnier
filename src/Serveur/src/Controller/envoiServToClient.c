@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "src/packetmanager.h"
+#include "../packetmanager.h"
 #include "receptionClientToServ.h"
 
 /**

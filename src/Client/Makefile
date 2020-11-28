@@ -65,7 +65,7 @@ OBJECTS		:= $(SOURCES:.c=.o)
 OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
 all: $(OUTPUT) $(MAIN)
-	cp src/glade output -r
+	cp src/View output/ -r
 	@echo Executing 'all' complete!
 
 $(OUTPUT):

@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <gtk/gtk.h>
+//#include <gtk/gtk.h>
 #include "../packetmanager.h"
-#include "envoiClientToServ.h"
+//#include "envoiClientToServ.h"
 
 /**
  * Envoi du packet des informations du client
@@ -22,6 +22,17 @@ void clientInitClient(int sockfd, int clientID) {
     packetClientInit *packetCInit = createPacketClientInit(clientID);
     write(sockfd, packetCInit, sizeof (packetCInit));
     free(packetCInit);
+}
+
+/**
+ * @brief  Envoi du packet En attente de partie
+ * @autor Thomas
+ * @param sockfd 
+ */
+void ClientWaitingGame(int sockfd) {
+    packetClientWaitingGame *packetWaiting = createPacketClientWaitingGame();
+    write(sockfd, packetWaiting, sizeof(packetWaiting));
+    free(packetWaiting);
 }
 
 /**

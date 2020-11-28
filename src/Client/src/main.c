@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 #include "clientcxnmanager.h"
-#include "packetmanager.h"
+//#include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
 #include "confreadwrite.h"
 
@@ -32,7 +32,9 @@ int main(int argc, char** argv) {
 
     //recuperation du clientID depuis le fichier de conf
     int clientID = 4;
-    int socketfd = createSocket();
+    //int socketfd = createSocket();
+    int socketfd = open_connection();
+
 
     //Envoi d'un paquet d'Init
     clientInitClient(socketfd, clientID);
