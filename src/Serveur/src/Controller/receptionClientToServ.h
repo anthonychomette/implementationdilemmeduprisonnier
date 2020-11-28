@@ -39,5 +39,6 @@ void servChoice(packetClientPlayerChoice packet);
 //pour collaborer bool choice = 0   (à vérifier dans la structure)
 
 
+
 #endif /* RECEPTIONCLIENTTOSERV_H */
 

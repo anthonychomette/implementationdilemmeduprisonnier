@@ -11,6 +11,7 @@
  * Created on November 18, 2020, 9:17 AM
  */
 
+#include "../packetmanager.h"
 
 #ifndef ENVOICLIENTTOSERV_H
 #define ENVOICLIENTTOSERV_H

@@ -23,7 +23,7 @@
 #include "clientcxnmanager.h"
 #include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
-
+#include "confreadwrite.h"
 
 /*
  * 
