@@ -6,7 +6,7 @@
     <property name="name">app_pret</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkFixed" id="PageJeSuisPret">
+      <object class="GtkFixed">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
