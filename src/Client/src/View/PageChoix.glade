@@ -3,10 +3,10 @@
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkApplicationWindow">
+    <property name="name">app_choix</property>
     <property name="can_focus">False</property>
     <child>
       <object class="GtkFixed" id="PageChoix">
-        <property name="name">app_choix</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
