@@ -21,7 +21,7 @@
 #include <stdbool.h>
 
 #include "clientcxnmanager.h"
-//#include "packetmanager.h"
+#include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
 #include "confreadwrite.h"
 
@@ -34,7 +34,7 @@ int main(int argc, char** argv) {
     int clientID = 4;
     //int socketfd = createSocket();
     int socketfd = open_connection();
-
+    config();
 
     //Envoi d'un paquet d'Init
     clientInitClient(socketfd, clientID);
