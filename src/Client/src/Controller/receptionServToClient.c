@@ -1,7 +1,7 @@
 /* 
  * Fichier de traitement du packet recu de la part du serveur
  * 
- * @autor noeline
+ * @author noeline
  */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@ GtkBuilder *builder = NULL;
 /**
  * Affichage de la page pour savoir si le client est pret
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverIsPlayerReady() {
     GtkWidget *win = NULL;
@@ -32,7 +32,7 @@ void serverIsPlayerReady() {
 /**
  * Affichage de la page d'attente
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverWaitingEnd() {
     gtk_main_quit();
@@ -47,7 +47,7 @@ void serverWaitingEnd() {
 /**
  * Affichage de la page pour faire le choix
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverMakeChoice() {
     gtk_main_quit();
@@ -62,7 +62,7 @@ void serverMakeChoice() {
 /**
  * reception du résultat
  * 
- * @autor noeline
+ * @author noeline
  * @param packet
  */
 void serverScore(packetServerScore packet) {
@@ -116,7 +116,7 @@ void serverScore(packetServerScore packet) {
 /**
  * Envoi de la fin de la partie ou non
  * 
- * @autor noeline
+ * @author noeline
  * @param packet
  */
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet) {
