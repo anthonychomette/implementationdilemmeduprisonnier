@@ -163,7 +163,7 @@ void receivePacket(char *buffer_in) {
     case 12: {
         packetServerIsPlayerReady *packetSIsPlayerReady= malloc(1 * sizeof(packetServerIsPlayerReady));
         memcpy(packetSIsPlayerReady, buffer_in, sizeof(packetServerIsPlayerReady));
-        serverIsPlayerReady()
+        serverIsPlayerReady();
         free(packetSIsPlayerReady);
         break;
     }
@@ -183,7 +183,7 @@ void receivePacket(char *buffer_in) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
-        serverScore()
+        serverScore();
         free(packetSScore);
         break;
     }
