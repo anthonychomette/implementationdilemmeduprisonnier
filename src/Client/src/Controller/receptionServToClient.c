@@ -20,7 +20,7 @@ GtkBuilder *builder = NULL;
  * @autor noeline
  */
 void serverIsPlayerReady(){
-    GtkWidget *win;
+    GtkWidget *win =NULL;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("glade/PageJeSuisPret.glade");
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_pret"));
@@ -35,7 +35,7 @@ void serverIsPlayerReady(){
  * @autor noeline
  */
 void serverWaitingEnd(){
-    gtk_main();
+    gtk_main() =NULL;
     GtkWidget *win;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("glade/PageAttente.glade");
@@ -51,7 +51,7 @@ void serverWaitingEnd(){
  */
 void serverMakeChoice(){
     gtk_main();
-    GtkWidget *win;
+    GtkWidget *win =NULL;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("glade/PageChoix.glade");
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_choix"));
@@ -67,7 +67,7 @@ void serverMakeChoice(){
  */
 void serverScore(packetServerScore packet){
     gtk_main();
-    GtkWidget *win;
+    GtkWidget *win =NULL;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("glade/PageResultat.glade");
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_resultat"));
