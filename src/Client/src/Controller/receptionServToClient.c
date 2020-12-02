@@ -78,29 +78,33 @@ void serverScore(packetServerScore packet) {
         {
             //il a dénoncer et l'autre n'a rien dit
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous n'avez été trahis \n Aucune comdamnation");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt, 100, "Vous n'avez été trahis \n Aucune comdamnation");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 6:
         {
             //les 2 n'ont rien dit
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous n'avez été trahis \n Comdamnation : 6 mois");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt,100, "Vous n'avez été trahis \n Comdamnation : 6 mois");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 5:
         {
             //les 2 ont dénoncer
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous avez été trahis \n Comdamnation : 5 ans");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt,100, "Vous avez été trahis \n Comdamnation : 5 ans");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 10:
         {
             //l'autre à dénnoncé et lui n'a rien dit 
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous avez été trahis \n Comdamnation : 10 ans");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt, 100,"Vous avez été trahis \n Comdamnation : 10 ans");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
     }
 
