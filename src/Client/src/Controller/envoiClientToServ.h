@@ -11,7 +11,6 @@
  * Created on November 18, 2020, 9:17 AM
  */
 
-#include "../packetmanager.h"
 
 #ifndef ENVOICLIENTTOSERV_H
 #define ENVOICLIENTTOSERV_H
@@ -28,15 +27,6 @@ extern "C" {
 #endif
 
 
-
-
-
-
-
-
-
-
-#endif /* ENVOICLIENTTOSERV_H */
 
 //Envoi infos de connexion
 void clientInitClient(int sockfd, int clientID);
@@ -58,3 +48,12 @@ void clientChoiceCollabore(int sockfd);
 void clientChoiceBetray(int sockfd);
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour trahir bool choice = 1       (à vérifier dans la structure)
+
+
+
+
+
+
+
+#endif /* ENVOICLIENTTOSERV_H */
+
