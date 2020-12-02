@@ -27,6 +27,17 @@ extern "C" {
 }
 #endif
 
+
+
+
+
+
+
+
+
+
+#endif /* ENVOICLIENTTOSERV_H */
+
 //Envoi infos de connexion
 void clientInitClient(int sockfd, int clientID);
 ////envoi d'un packetClientInit 
@@ -47,14 +58,3 @@ void clientChoiceCollabore(int sockfd);
 void clientChoiceBetray(int sockfd);
 ////Envoi d'un packetClientPlayerChoice packet
 ////pour trahir bool choice = 1       (à vérifier dans la structure)
-
-
-
-
-
-
-
-
-
-#endif /* ENVOICLIENTTOSERV_H */
-

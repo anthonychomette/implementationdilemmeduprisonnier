@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-//#include <gtk/gtk.h>
+#include <gtk/gtk.h>
 #include "../packetmanager.h"
-//#include "envoiClientToServ.h"
+#include "envoiClientToServ.h"
 
 /**
  * Envoi du packet des informations du client
