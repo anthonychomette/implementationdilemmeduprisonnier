@@ -1,7 +1,7 @@
 /* 
  * Fichier de traitement du packet recu de la part du serveur
  * 
- * @autor noeline
+ * @author noeline
  */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@ GtkBuilder *builder = NULL;
 /**
  * Affichage de la page pour savoir si le client est pret
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverIsPlayerReady() {
     GtkWidget *win = NULL;
@@ -32,7 +32,7 @@ void serverIsPlayerReady() {
 /**
  * Affichage de la page d'attente
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverWaitingEnd() {
     gtk_main_quit();
@@ -47,7 +47,7 @@ void serverWaitingEnd() {
 /**
  * Affichage de la page pour faire le choix
  * 
- * @autor noeline
+ * @author noeline
  */
 void serverMakeChoice() {
     gtk_main_quit();
@@ -62,7 +62,7 @@ void serverMakeChoice() {
 /**
  * reception du résultat
  * 
- * @autor noeline
+ * @author noeline
  * @param packet
  */
 void serverScore(packetServerScore packet) {
@@ -78,29 +78,33 @@ void serverScore(packetServerScore packet) {
         {
             //il a dénoncer et l'autre n'a rien dit
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous n'avez été trahis \n Aucune comdamnation");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt, 100, "Vous n'avez été trahis \n Aucune comdamnation");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 6:
         {
             //les 2 n'ont rien dit
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous n'avez été trahis \n Comdamnation : 6 mois");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt,100, "Vous n'avez été trahis \n Comdamnation : 6 mois");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 5:
         {
             //les 2 ont dénoncer
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous avez été trahis \n Comdamnation : 5 ans");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt,100, "Vous avez été trahis \n Comdamnation : 5 ans");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
         case 10:
         {
             //l'autre à dénnoncé et lui n'a rien dit 
             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
-            snprintf(txt, "Vous avez été trahis \n Comdamnation : 10 ans");
-            gtk_label_set_text(lblResultat, txt);
+            snprintf(txt, 100,"Vous avez été trahis \n Comdamnation : 10 ans");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);
+            break;
         }
     }
 
@@ -112,7 +116,7 @@ void serverScore(packetServerScore packet) {
 /**
  * Envoi de la fin de la partie ou non
  * 
- * @autor noeline
+ * @author noeline
  * @param packet
  */
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet) {
