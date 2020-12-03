@@ -189,6 +189,7 @@ void receivePacket(char *buffer_in) {
     }
     default: {
         perror("Erreur de reception du paquet : type non défini !!!");
+        //printf("%d",type);
         break;
     }
 

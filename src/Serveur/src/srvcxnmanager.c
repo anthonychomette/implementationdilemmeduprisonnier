@@ -10,6 +10,7 @@
 #include <stdbool.h>
 #include "srvcxnmanager.h"
 #include <netinet/tcp.h>
+#include "packetmanager.h"
 
 
 connection_t* connections[MAXSIMULTANEOUSCLIENTS];
@@ -85,9 +86,9 @@ void *threadProcess(void *ptr) {
 
         printf("*****************\n");
 
-        if (strncmp(buffer_in, "bye", 3) == 0) {
+/*         if (strncmp(buffer_in, "bye", 3) == 0) {
             break;
-        }
+        } */
 
 //Ancien code bon
 
@@ -103,7 +104,12 @@ void *threadProcess(void *ptr) {
 
         } */
 
-receivePacket(buffer_in);
+
+        receivePacket(buffer_in);
+
+
+
+
 
 #if DEBUG
         printf("DEBUG-----------------------------------------------------------\n");
@@ -111,12 +117,17 @@ receivePacket(buffer_in);
         printf("Buffer : %.*s\n", len, buffer_in);
         printf("----------------------------------------------------------------\n");
 #endif
-        strcpy(buffer_out, "\nServer Echo : ");
-        strncat(buffer_out, buffer_in, len);
+/*         strcpy(buffer_out, "\nServer Echo : ");
+        strncat(buffer_out, buffer_in, len); */
 
         if (buffer_in[0] == '@') {
             for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
                 if (connections[i] != NULL) {
+
+/*                     packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
+                    write(connections[i]->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
+                    free(packetSWaitingEnd); */
+
                     write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
                 }
             }
@@ -130,7 +141,11 @@ receivePacket(buffer_in);
                 } //no client found ? : we dont care !!
             }
         } else {
-            write(connection->sockfd, buffer_out, strlen(buffer_out));
+            //write(connection->sockfd, buffer_out, strlen(buffer_out));
+
+                packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
+                write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
+                free(packetSWaitingEnd);
         }
 
         //clear input buffer

@@ -20,6 +20,8 @@ void *threadProcess(void * ptr) {
             break;
         }
 
+        receivePacket(buffer_in);
+
         printf("receive %d chars\n", len);
         printf("%.*s\n", len, buffer_in);
     }

@@ -68,7 +68,7 @@ packetServerInit * createPacketServerInit() {
 packetServerWaitingEnd * createPacketServerWaitingEnd() {
 
     packetServerWaitingEnd *WaitingEnd;
-    WaitingEnd = malloc(1 * sizeof(packetServerInit));
+    WaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
 
     WaitingEnd->type = 11; //Type 11 Message Sortez de votre attente SVP une partie va démarrer !
 
@@ -125,13 +125,14 @@ void receivePacket(char *buffer_in) {
     case 1: {
         packetClientInit *packetCInit = malloc(1 * sizeof(packetClientInit));
         memcpy(packetCInit, buffer_in, sizeof(packetClientInit));
-        //Appel Fonction
+        printf("Le client %d s'est connecté", packetCInit->numClient);
         free(packetCInit);
         break;
     }
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
+        printf("Le client est en attente");
         free(packetCWaitingGame);
         break;
     }

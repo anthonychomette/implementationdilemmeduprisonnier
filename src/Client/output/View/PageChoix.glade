@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.36.0 -->
+<interface>
+  <requires lib="gtk+" version="3.22"/>
+  <object class="GtkApplicationWindow" id="PageChoix ">
+    <property name="name">app_choix</property>
+    <property name="can_focus">False</property>
+    <child>
+      <object class="GtkFixed">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Que souhaitez vous faire ?</property>
+          </object>
+          <packing>
+            <property name="x">142</property>
+            <property name="y">38</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnTrahir">
+            <property name="label" translatable="yes">Trahir</property>
+            <property name="name">btnTrahir</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="clientChoiceBetray" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">148</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnCollaborer">
+            <property name="label" translatable="yes">Collaborer</property>
+            <property name="name">btnCollaborer</property>
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="clientChoiceCollabore" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">94</property>
+            <property name="y">147</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+</interface>

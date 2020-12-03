@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     //Envoi d'un paquet d'Init
     clientInitClient(socketfd, clientID);
 
-    usleep(10000); //Pause de 10 ms ne pas utiliser
+    usleep(10000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
 
     //Envoi d'un paquet d'Attente
     ClientWaitingGame(socketfd);

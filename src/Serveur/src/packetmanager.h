@@ -2,6 +2,12 @@
 
 //Structure des messages côté client
 
+
+
+
+#ifndef PACKETMANAGER_H
+#define PACKETMANAGER_H
+
 /**
  * @brief Structure
  * type est le type du paquet 1 = je suis connecté et je suis le client X
@@ -101,9 +107,6 @@ int type;
 int score;
 }packetServerScore;
 
-
-#ifndef PACKETMANAGER_H
-#define PACKETMANAGER_H
 
 /* #define BUFFERSIZE 2048
 
