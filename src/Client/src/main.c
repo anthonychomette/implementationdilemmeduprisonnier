@@ -30,6 +30,8 @@
  */
 int main(int argc, char** argv) {
 
+    initView();
+    
     //recuperation du clientID depuis le fichier de conf
     int clientID = 4;
     //int socketfd = createSocket();
@@ -45,6 +47,7 @@ int main(int argc, char** argv) {
     ClientWaitingGame(socketfd);
 
     createPthread(socketfd);
+    
     return (EXIT_SUCCESS);
 }
 
