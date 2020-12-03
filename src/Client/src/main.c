@@ -10,6 +10,7 @@
  *
  */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,6 +20,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <stdbool.h>
+#include <gtk/gtk.h>
 
 #include "clientcxnmanager.h"
 #include "packetmanager.h"
@@ -28,8 +30,15 @@
 /*
  * 
  */
+
+extern GtkBuilder *builder;
+
 int main(int argc, char** argv) {
 
+    printf("Hello \n") ;
+
+  
+    
     //recuperation du clientID depuis le fichier de conf
     int clientID = 4;
     //int socketfd = createSocket();
@@ -45,6 +54,10 @@ int main(int argc, char** argv) {
     ClientWaitingGame(socketfd);
 
     createPthread(socketfd);
+
+    initView();
+
+    
     return (EXIT_SUCCESS);
 }
 

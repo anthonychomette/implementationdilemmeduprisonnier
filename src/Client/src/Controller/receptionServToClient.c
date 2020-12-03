@@ -15,11 +15,29 @@
 GtkBuilder *builder = NULL;
 
 /**
+ * Affichage de la premiere page de la page de l'experience
+ * 
+ * @author noeline
+ */
+void initView() {
+    GtkWidget *win;
+    gtk_init(0, NULL);
+    builder = gtk_builder_new_from_file("output/View/PageAttente.glade");
+    printf("###%p : \n", builder);
+    win = GTK_WIDGET(gtk_builder_get_object(builder, "PageAttente "));
+    gtk_builder_connect_signals(builder, NULL);
+    gtk_widget_show(win);
+    gtk_main();
+}
+
+
+/**
  * Affichage de la page pour savoir si le client est pret
  * 
  * @author noeline
  */
 void serverIsPlayerReady() {
+    gtk_main_quit();
     GtkWidget *win = NULL;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("View/PageJeSuisPret.glade");

@@ -81,10 +81,10 @@ void createPthread(int sockfd) {
 
     //write(connection->sock,"Main APP Still running",15);
     pthread_detach(thread);
-    do {
-        fgets(bufferOut, 100, stdin);
-        //printf("sending : %s\n", msg);
-        status = write(sockfd, bufferOut, strlen(bufferOut));
-        //memset(msg,'\0',100);
-    } while (status != -1);
+//    do {
+//        fgets(bufferOut, 100, stdin);
+//        //printf("sending : %s\n", msg);
+//        status = write(sockfd, bufferOut, strlen(bufferOut));
+//        //memset(msg,'\0',100);
+//    } while (status != -1);
 }
