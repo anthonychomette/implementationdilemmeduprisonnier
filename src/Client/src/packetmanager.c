@@ -122,31 +122,6 @@ void receivePacket(char *buffer_in) {
 
     switch (*type)
     {
-    case 1: {
-        packetClientInit *packetCInit = malloc(1 * sizeof(packetClientInit));
-        memcpy(packetCInit, buffer_in, sizeof(packetClientInit));
-        //Appel Fonction
-        free(packetCInit);
-        break;
-    }
-     case 2: {
-        packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
-        memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
-        free(packetCWaitingGame);
-        break;
-    }
-    case 3: {
-        packetClientPlayerReady *packetCPlayerReady = malloc(1 * sizeof(packetClientPlayerReady));
-        memcpy(packetCPlayerReady, buffer_in, sizeof(packetClientPlayerReady));
-        free(packetCPlayerReady);
-        break;
-    }
-    case 4: {
-        packetClientPlayerChoice *packetCPlayerChoice = malloc(1 * sizeof(packetClientPlayerChoice));
-        memcpy(packetCPlayerChoice, buffer_in, sizeof(packetClientPlayerChoice));
-        free(packetCPlayerChoice);
-        break;
-    }
     case 10: {
         packetServerInit *packetSInit = malloc(1 * sizeof(packetServerInit));
         memcpy(packetSInit, buffer_in, sizeof(packetServerInit));
@@ -156,7 +131,8 @@ void receivePacket(char *buffer_in) {
     case 11: {
         packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
         memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
-        serverWaitingEnd();
+        printf("Fin de l'attente : Demarrage de la partie !");
+        //serverWaitingEnd();
         free(packetSWaitingEnd);
         break;
     }
@@ -183,7 +159,7 @@ void receivePacket(char *buffer_in) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
-        serverScore();
+        //serverScore();
         free(packetSScore);
         break;
     }

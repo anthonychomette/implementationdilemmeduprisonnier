@@ -106,7 +106,7 @@ void *threadProcess(void *ptr) {
 
 
         receivePacket(buffer_in);
-
+        //memset(buffer_in, '\0', BUFFERSIZE);
 
 
 
@@ -120,13 +120,9 @@ void *threadProcess(void *ptr) {
 /*         strcpy(buffer_out, "\nServer Echo : ");
         strncat(buffer_out, buffer_in, len); */
 
-        if (buffer_in[0] == '@') {
+/*         if (buffer_in[0] == '@') {
             for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
                 if (connections[i] != NULL) {
-
-/*                     packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-                    write(connections[i]->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
-                    free(packetSWaitingEnd); */
 
                     write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
                 }
@@ -146,10 +142,14 @@ void *threadProcess(void *ptr) {
                 packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
                 write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
                 free(packetSWaitingEnd);
-        }
+        } */
+
+        packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
+        write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
+        free(packetSWaitingEnd);
 
         //clear input buffer
-        memset(buffer_in, '\0', BUFFERSIZE);
+        //memset(buffer_in, '\0', BUFFERSIZE);
     }
     printf("Connection to client %i ended \n", connection->index);
     close(connection->sockfd);

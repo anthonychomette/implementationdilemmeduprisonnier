@@ -16,14 +16,14 @@ void *threadProcess(void * ptr) {
     int sockfd = *((int *) ptr);
     int len;
     while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
-        if (strncmp(buffer_in, "exit", 4) == 0) {
+/*         if (strncmp(buffer_in, "exit", 4) == 0) {
             break;
-        }
+        } */
 
         receivePacket(buffer_in);
 
-        printf("receive %d chars\n", len);
-        printf("%.*s\n", len, buffer_in);
+        //printf("receive %d chars\n", len);
+        //printf("%.*s\n", len, buffer_in);
     }
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);

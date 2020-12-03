@@ -148,46 +148,6 @@ void receivePacket(char *buffer_in) {
         free(packetCPlayerChoice);
         break;
     }
-    case 10: {
-        packetServerInit *packetSInit = malloc(1 * sizeof(packetServerInit));
-        memcpy(packetSInit, buffer_in, sizeof(packetServerInit));
-        free(packetSInit);
-        break;
-    }
-    case 11: {
-        packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
-        memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
-        //serverWaitingEnd();
-        free(packetSWaitingEnd);
-        break;
-    }
-    case 12: {
-        packetServerIsPlayerReady *packetSIsPlayerReady= malloc(1 * sizeof(packetServerIsPlayerReady));
-        memcpy(packetSIsPlayerReady, buffer_in, sizeof(packetServerIsPlayerReady));
-        //serverIsPlayerReady()
-        free(packetSIsPlayerReady);
-        break;
-    }
-    case 13: {
-        packetServerMakeChoice *packetSMakeChoice = malloc(1 * sizeof(packetServerMakeChoice));
-        memcpy(packetSMakeChoice, buffer_in, sizeof(packetServerMakeChoice));
-        //serverMakeChoice();
-        free(packetSMakeChoice);
-        break;
-    }
-    case 14: {
-        packetServerIsThisTheEnd *packetSIsThisTheEnd = malloc(1 * sizeof(packetServerIsThisTheEnd));
-        memcpy(packetSIsThisTheEnd, buffer_in, sizeof(packetServerIsThisTheEnd));
-        free(packetSIsThisTheEnd);
-        break;
-    }
-    case 15: {
-        packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
-        memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
-        //erverScore()
-        free(packetSScore);
-        break;
-    }
     default: {
         perror("Erreur de reception du paquet : type non défini !!!");
         break;
