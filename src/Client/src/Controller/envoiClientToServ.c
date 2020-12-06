@@ -32,7 +32,7 @@ void clientInitClient(int sockfd, int clientID) {
 void ClientWaitingGame(int sockfd) {
     packetClientWaitingGame *packetWaiting = createPacketClientWaitingGame();
     write(sockfd, packetWaiting, sizeof(packetWaiting));
-    free(packetWaiting);
+    //free(packetWaiting);
 }
 
 /**

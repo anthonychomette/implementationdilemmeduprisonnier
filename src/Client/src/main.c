@@ -31,32 +31,18 @@
  * 
  */
 
+//extern int entreThread;
 extern GtkBuilder *builder;
 
 int main(int argc, char** argv) {
 
-    printf("Hello \n") ;
-
-  
     
-    //recuperation du clientID depuis le fichier de conf
-    int clientID = 4;
-    //int socketfd = createSocket();
+    //initView(); TODO Mettre la view dans un thread pour ne pas la rendre bloquante
+
     int socketfd = open_connection();
-    config();
-
-    //Envoi d'un paquet d'Init
-    clientInitClient(socketfd, clientID);
-
-    usleep(10000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
-
-    //Envoi d'un paquet d'Attente
-    ClientWaitingGame(socketfd);
+    //config();
 
     createPthread(socketfd);
-
-    initView();
-
     
     return (EXIT_SUCCESS);
 }

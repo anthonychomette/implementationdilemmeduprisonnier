@@ -10,26 +10,44 @@
 #include <netinet/tcp.h>
 
 #include "clientcxnmanager.h"
+#include "packetmanager.h"
+#include "Controller/envoiClientToServ.h"
 
 void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
+
+    printf("&&&&&&& Debut ThreadProcess\n\n");
+
+    //recuperation du clientID depuis le fichier de conf
+    int clientID = 4;
+
+    printf("Avant paquet d'Init\n\n");
+    //Envoi d'un paquet d'Init
+    clientInitClient(sockfd, clientID);
+    printf("paquet d'Init\n\n");
+
+    usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
+
+    //Envoi d'un paquet d'Attente
+    ClientWaitingGame(sockfd);
+    usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire */
+
+    printf("&&&&&&& Mid ThreadProcess\n\n");
     while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
-/*         if (strncmp(buffer_in, "exit", 4) == 0) {
-            break;
-        } */
-
+        printf("&&&&&&& WHILE ThreadProcess\n\n");
         receivePacket(buffer_in);
-
-        //printf("receive %d chars\n", len);
-        //printf("%.*s\n", len, buffer_in);
     }
+
+    printf("&&&&&&& Fin ThreadProcess\n\n");
+
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);
 }
 
 int open_connection() {
+    //printf("&&&&&&&&&&&&Debut open connection\n\n");
     int sockfd;
 
     struct sockaddr_in serverAddr;
@@ -58,6 +76,7 @@ int open_connection() {
         exit(-1);
     };
 
+    //printf("&&&&&&&&&&&&FIN open connection\n\n");
     return sockfd;
 }
 
@@ -68,8 +87,10 @@ int open_connection() {
 
 void createPthread(int sockfd) {
 
+
+
     int status = 0;
-    char bufferOut[500];
+    char bufferOut[1000];
     pthread_t thread;
 
     //clientInitClient(sockfd, 4);
@@ -80,11 +101,13 @@ void createPthread(int sockfd) {
     //clientInitClient(sockfd, 5);
 
     //write(connection->sock,"Main APP Still running",15);
-    pthread_detach(thread);
-//    do {
-//        fgets(bufferOut, 100, stdin);
-//        //printf("sending : %s\n", msg);
-//        status = write(sockfd, bufferOut, strlen(bufferOut));
-//        //memset(msg,'\0',100);
-//    } while (status != -1);
+
+    printf("Detachement du phthread !!!\n");
+    pthread_join(thread, NULL);
+/*       do {
+        fgets(bufferOut, 100, stdin);
+        //printf("sending : %s\n", msg);
+        status = write(sockfd, bufferOut, strlen(bufferOut));
+        //memset(msg,'\0',100);
+    } while (status != -1); */
 }

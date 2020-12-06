@@ -81,32 +81,33 @@ void *threadProcess(void *ptr) {
             memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
             printf("Le client %d s'est connecté ! ", paquetOK->numClient);
         }*/
-
+    printf("#######Avant boucle\n");
     while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
         printf("*****************\n");
 
-/*         if (strncmp(buffer_in, "bye", 3) == 0) {
-            break;
-        } */
+//         if (strncmp(buffer_in, "bye", 3) == 0) {
+//            break;
+
 
 //Ancien code bon
 
-/*         int *type = buffer_in;
-        printf("Le type est : %d \n", *type);
-        if(*type == 1) 
-        {
-            paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
-            //memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
-            memcpy(paquetOK, buffer_in, sizeof(paquetClientInit));
-            int res = paquetOK->numClient;
-            printf("Le client %d s'est connecté ! \n", res);
+      //   int *type = buffer_in;
+        //printf("Le type est : %d \n", *type);
+        //if(*type == 1) 
+        //{
+        //    paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
+        //    //memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
+        //    memcpy(paquetOK, buffer_in, sizeof(paquetClientInit));
+        //    int res = paquetOK->numClient;
+        //    printf("Le client %d s'est connecté ! \n", res);
 
-        } */
+        //}
 
-
+        printf("Avant aiguillage");
         receivePacket(buffer_in);
-        //memset(buffer_in, '\0', BUFFERSIZE);
+        printf("Après aiguillage");
+        memset(buffer_in, '\0', BUFFERSIZE);
 
 
 
@@ -117,10 +118,10 @@ void *threadProcess(void *ptr) {
         printf("Buffer : %.*s\n", len, buffer_in);
         printf("----------------------------------------------------------------\n");
 #endif
-/*         strcpy(buffer_out, "\nServer Echo : ");
-        strncat(buffer_out, buffer_in, len); */
+        strcpy(buffer_out, "\nServer Echo : ");
+        strncat(buffer_out, buffer_in, len);
 
-/*         if (buffer_in[0] == '@') {
+        if (buffer_in[0] == '@') {
             for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
                 if (connections[i] != NULL) {
 
@@ -139,17 +140,14 @@ void *threadProcess(void *ptr) {
         } else {
             //write(connection->sockfd, buffer_out, strlen(buffer_out));
 
+                printf("Le Serveur envoie un packet\n\n");
                 packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
                 write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
-                free(packetSWaitingEnd);
-        } */
+                free(packetSWaitingEnd); 
+        } 
 
-        packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-        write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
-        free(packetSWaitingEnd);
-
-        //clear input buffer
-        //memset(buffer_in, '\0', BUFFERSIZE);
+        //clear input buffer */
+        memset(buffer_in, '\0', BUFFERSIZE);
     }
     printf("Connection to client %i ended \n", connection->index);
     close(connection->sockfd);

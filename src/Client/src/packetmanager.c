@@ -120,6 +120,8 @@ void receivePacket(char *buffer_in) {
 
     int *type = buffer_in;
 
+    printf("Client received a %d packet", *type);
+
     switch (*type)
     {
     case 10: {
@@ -132,7 +134,7 @@ void receivePacket(char *buffer_in) {
         packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
         memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
         printf("Fin de l'attente : Demarrage de la partie !");
-        //serverWaitingEnd();
+        serverWaitingEnd();
         free(packetSWaitingEnd);
         break;
     }

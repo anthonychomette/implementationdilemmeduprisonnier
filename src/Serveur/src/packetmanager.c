@@ -120,19 +120,21 @@ void receivePacket(char *buffer_in) {
 
     int *type = buffer_in;
 
+    printf("Server received a %d packet", *type);
+
     switch (*type)
     {
     case 1: {
         packetClientInit *packetCInit = malloc(1 * sizeof(packetClientInit));
         memcpy(packetCInit, buffer_in, sizeof(packetClientInit));
-        printf("Le client %d s'est connecté", packetCInit->numClient);
+        printf("Le client %d s'est connecté\n", packetCInit->numClient);
         free(packetCInit);
         break;
     }
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
-        printf("Le client est en attente");
+        printf("Le client est en attente\n");
         free(packetCWaitingGame);
         break;
     }
@@ -149,7 +151,7 @@ void receivePacket(char *buffer_in) {
         break;
     }
     default: {
-        perror("Erreur de reception du paquet : type non défini !!!");
+        perror("Erreur de reception du paquet : type non défini !!!\n");
         break;
     }
 
