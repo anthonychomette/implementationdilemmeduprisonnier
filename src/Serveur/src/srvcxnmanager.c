@@ -13,6 +13,15 @@
 #include "packetmanager.h"
 
 
+#define BEGIN        '{'
+#define SEP          ':'
+#define BUF_SIZE     128
+#define FILENAME     "Fichier_conf.txt"
+
+#define TAG_NAME     "Ip_add"
+#define TAG_AGE      "Port"
+#define TAG_ADRESS   "Somme"
+
 connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
 
