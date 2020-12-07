@@ -119,8 +119,8 @@ packetServerScore * createPacketServerScore(int score) {
 void receivePacket(char *buffer_in) {
 
     int *type = buffer_in;
-
-    printf("Client received a %d packet", *type);
+    
+    printf("Client received a %d packet\n", *type);
 
     switch (*type)
     {
