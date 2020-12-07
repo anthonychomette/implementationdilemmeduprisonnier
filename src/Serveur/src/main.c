@@ -25,6 +25,8 @@
 #include "srvcxnmanager.h"
 #include <netinet/tcp.h>
 
+#include "fichier_confsrv.h"
+#include "fichier_csv.h"
 
 /*
  *
@@ -36,13 +38,14 @@ int main(int argc, char** argv) {
     int index = 1;
     connection_t *connection;
     pthread_t thread;
-
-
+    config();
+    csvFile();
+    csvWriteAndRead();
     /* init array*/
     init_sockets_array();
     /* create socket */
     sockfd = create_server_socket();
-
+    
     /* listen on port , stack size 50 for incoming connections*/
     if (listen(sockfd, 50) < 0) {
         fprintf(stderr, "%s: error: cannot listen on port\n", argv[0]);
