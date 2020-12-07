@@ -120,7 +120,7 @@ void receivePacket(char *buffer_in) {
 
     int *type = buffer_in;
 
-    printf("Server received a %d packet", *type);
+    printf("Server received a %d packet\n", *type);
 
     switch (*type)
     {
