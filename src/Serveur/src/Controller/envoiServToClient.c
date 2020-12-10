@@ -24,7 +24,7 @@ void serverIsPlayerReady(int sockfd) {
 }
 
 /**
- * Mets le client en attente
+ * Sort le client de l'attente
  * 
  * @autor noeline
  * @param sockfd
@@ -84,4 +84,16 @@ void serverIsNotThisTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(0);
     write(sockfd, packetSIsThisTheEnd, sizeof (packetSIsThisTheEnd));
     free(packetSIsThisTheEnd);
+}
+
+/**
+ * Envoi d'un message qui indique que le serveur a compris le client et qu'il est prêt
+ * 
+ * @autor Thomas
+ * @param sockfd
+ */
+void serverInit(int sockfd) {
+    packetServerInit *packetSInit = createPacketServerInit();
+    write(sockfd, packetSInit, sizeof (packetServerInit));
+    free(packetSInit);
 }

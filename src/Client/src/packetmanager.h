@@ -196,6 +196,6 @@ packetServerScore * createPacketServerScore(int score);
  * 
  * @param buffer_in 
  */
-void receivePacket(char *buffer_in);
+void receivePacket(char *buffer_in, int socket);
 
 #endif /* PACKETMANAGER_H */

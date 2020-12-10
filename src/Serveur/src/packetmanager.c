@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+#include "Controller/envoiServToClient.h"
 #include "packetmanager.h"
 
 //Création des paquets client
@@ -116,25 +117,33 @@ packetServerScore * createPacketServerScore(int score) {
     return Score;
 }
 
-void receivePacket(char *buffer_in) {
+void receivePacket(char *buffer_in, int socket) {
 
     int *type = buffer_in;
 
-    printf("Server received a %d packet\n", *type);
+    printf("Server received a packet of type %d\n", *type);
 
     switch (*type)
     {
     case 1: {
         packetClientInit *packetCInit = malloc(1 * sizeof(packetClientInit));
         memcpy(packetCInit, buffer_in, sizeof(packetClientInit));
-        printf("Le client %d s'est connecté\n", packetCInit->numClient);
+
+        printf("Client %d connected\n", packetCInit->numClient);
+        //Reponse du serveur a ce packet : Je suis disponible  : ACK
+        serverInit(socket);
+        printf("Server send an ack to client %d\n", packetCInit->numClient);
+
         free(packetCInit);
         break;
     }
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
-        printf("Le client est en attente\n");
+        printf("Client number TODO is waiting\n");
+
+        serverWaitingEnd(socket);
+
         free(packetCWaitingGame);
         break;
     }

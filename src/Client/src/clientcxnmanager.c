@@ -18,29 +18,29 @@ void *threadProcess(void * ptr) {
     int sockfd = *((int *) ptr);
     int len;
 
-    printf("&&&&&&& Debut ThreadProcess\n\n");
+    //printf("&&&&&&& Debut ThreadProcess\n\n");
 
     //recuperation du clientID depuis le fichier de conf
     int clientID = 4;
 
-    printf("Avant paquet d'Init\n\n");
+    //printf("Avant paquet d'Init\n\n");
     //Envoi d'un paquet d'Init
     clientInitClient(sockfd, clientID);
-    printf("paquet d'Init\n\n");
+    //printf("paquet d'Init\n\n");
 
-    usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
+    //usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
 
     //Envoi d'un paquet d'Attente
-    ClientWaitingGame(sockfd);
-    usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire */
+    //ClientWaitingGame(sockfd);
+    //usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire */
 
-    printf("&&&&&&& Mid ThreadProcess\n\n");
+    //printf("&&&&&&& Mid ThreadProcess\n\n");
     while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
-        printf("&&&&&&& WHILE ThreadProcess\n\n");
-        receivePacket(buffer_in);
+        //printf("&&&&&&& WHILE ThreadProcess\n\n");
+        receivePacket(buffer_in, sockfd);
     }
 
-    printf("&&&&&&& Fin ThreadProcess\n\n");
+    //printf("&&&&&&& Fin ThreadProcess\n\n");
 
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);

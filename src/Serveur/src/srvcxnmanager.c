@@ -90,10 +90,10 @@ void *threadProcess(void *ptr) {
             memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
             printf("Le client %d s'est connecté ! ", paquetOK->numClient);
         }*/
-    printf("#######Avant boucle\n");
+    //printf("#######Avant boucle\n");
     while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
-        printf("*****************\n");
+        //printf("*****************\n");
 
 //         if (strncmp(buffer_in, "bye", 3) == 0) {
 //            break;
@@ -113,9 +113,10 @@ void *threadProcess(void *ptr) {
 
         //}
 
-        printf("Avant aiguillage");
-        receivePacket(buffer_in);
-        printf("Après aiguillage");
+        //printf("Avant aiguillage");
+        int usedSocket = connection->sockfd;
+        receivePacket(buffer_in, usedSocket);
+        //printf("Après aiguillage");
         memset(buffer_in, '\0', BUFFERSIZE);
 
 
@@ -149,10 +150,10 @@ void *threadProcess(void *ptr) {
         } else {
             //write(connection->sockfd, buffer_out, strlen(buffer_out));
 
-                printf("Le Serveur envoie un packet\n\n");
+/*                 printf("Le Serveur envoie un packet\n\n");
                 packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
                 write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
-                free(packetSWaitingEnd); 
+                free(packetSWaitingEnd);  */
         } 
 
         //clear input buffer */

@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 #include "packetmanager.h"
+#include "Controller/envoiClientToServ.h"
 
 //Création des paquets client
 
@@ -116,7 +117,7 @@ packetServerScore * createPacketServerScore(int score) {
     return Score;
 }
 
-void receivePacket(char *buffer_in) {
+void receivePacket(char *buffer_in, int socket) {
 
     int *type = buffer_in;
     
@@ -127,6 +128,11 @@ void receivePacket(char *buffer_in) {
     case 10: {
         packetServerInit *packetSInit = malloc(1 * sizeof(packetServerInit));
         memcpy(packetSInit, buffer_in, sizeof(packetServerInit));
+
+        //Reponse Client : Je suis en attente d'une partie
+        ClientWaitingGame(socket);
+        printf("Client send a WaitingGame packet\n");
+
         free(packetSInit);
         break;
     }

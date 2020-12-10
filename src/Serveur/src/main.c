@@ -38,9 +38,9 @@ int main(int argc, char** argv) {
     int index = 1;
     connection_t *connection;
     pthread_t thread;
-    config();
-    csvFile();
-    csvWriteAndRead();
+    //config();
+    //csvFile();
+    //csvWriteAndRead();
     /* init array*/
     init_sockets_array();
     /* create socket */

@@ -191,8 +191,9 @@ packetServerScore * createPacketServerScore(int score);
 /**
  * @brief Fonction permettant d'aiguiller les paquet reçu vers le bon traitement suivant leurs type
  * 
- * @param buffer_in 
+ * @param buffer_in Paquet brut a determiner
+ * @param socket socket pour communiquer avec le client
  */
-void receivePacket(char *buffer_in);
+void receivePacket(char *buffer_in, int socket);
 
 #endif /* PACKETMANAGER_H */
