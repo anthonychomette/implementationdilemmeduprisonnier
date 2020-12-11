@@ -16,20 +16,20 @@ static int handler(void* user,const char* section,const char* name,const char* v
         pconfig->ip= strdup(value);
     } else if (MATCH("database","port")){
         pconfig->port = strdup(value);
-    } else if (MATCH("database","numeropc")){
-        pconfig->numeropc= strdup(value);
+    } else if (MATCH("database","IdClient")){
+        pconfig->IdClient= strdup(value);
     } else {
         return 0;
     }
     return 1;
  }
-void config(){
+int config(){
     configuration config;
     
     if (ini_parse("conf.ini", handler,&config) < 0) {
         printf ("Cant't load 'conf.ini'\n");
         return;
     }
-    printf("Config loaded from 'conf.ini' : ip=%s, port=%s\n numeropc=client%p", config.ip, config.port, config.numeropc);
-    return;
+    printf("Config loaded from 'conf.ini' : ip=%s, port=%s\n IdClient=%s", config.ip, config.port, config.IdClient);
+    return config.IdClient;
 }
