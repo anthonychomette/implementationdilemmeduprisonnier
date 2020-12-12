@@ -7,6 +7,7 @@
 #include "Controller/envoiServToClient.h"
 #include "packetmanager.h"
 
+
 //Création des paquets client
 
 packetClientInit * createPacketClientInit(int clientID) {
@@ -117,7 +118,7 @@ packetServerScore * createPacketServerScore(int score) {
     return Score;
 }
 
-void receivePacket(char *buffer_in, int socket) {
+ void receivePacket(char *buffer_in, player* Player) {
 
     int *type = buffer_in;
 
@@ -131,7 +132,7 @@ void receivePacket(char *buffer_in, int socket) {
 
         printf("Client %d connected\n", packetCInit->numClient);
         //Reponse du serveur a ce packet : Je suis disponible  : ACK
-        serverInit(socket);
+        serverInit(Player, packetCInit);
         printf("Server send an ack to client %d\n", packetCInit->numClient);
 
         free(packetCInit);
@@ -140,6 +141,8 @@ void receivePacket(char *buffer_in, int socket) {
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
+        
+
         printf("Client number TODO is waiting\n");
 
         serverWaitingEnd(socket);

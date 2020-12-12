@@ -22,20 +22,20 @@
 #define TAG_AGE      "Port"
 #define TAG_ADRESS   "Somme"
 
-connection_t* connections[MAXSIMULTANEOUSCLIENTS];
+//connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
 
 
 void init_sockets_array() {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-        connections[i] = NULL;
+        playerPool[i] = NULL;
     }
 }
 
-void add(connection_t *connection) {
+void add(player *player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-        if (connections[i] == NULL) {
-            connections[i] = connection;
+        if (playerPool[i] == NULL) {
+            playerPool[i] = player;
             return;
         }
     }
@@ -43,10 +43,10 @@ void add(connection_t *connection) {
     exit(-5);
 }
 
-void del(connection_t *connection) {
+void del(player *player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-        if (connections[i] == connection) {
-            connections[i] = NULL;
+        if (playerPool[i] == player) {
+            playerPool[i] = NULL;
             return;
         }
     }
@@ -69,13 +69,14 @@ void *threadProcess(void *ptr) {
     char buffer_out[BUFFERSIZE];
 
     int len;
-    connection_t *connection;
+    //connection_t *connection;
+    player *Player;
 
     if (!ptr) pthread_exit(0);
-    connection = (connection_t *) ptr;
+    Player = (player*) ptr;
     printf("New incoming connection \n");
 
-    add(connection);
+    add(Player);
 
     //Welcome the new client
     /*printf("Welcome #%i\n", connection->index);
@@ -91,78 +92,17 @@ void *threadProcess(void *ptr) {
             printf("Le client %d s'est connecté ! ", paquetOK->numClient);
         }*/
     //printf("#######Avant boucle\n");
-    while ((len = read(connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
+    while ((len = read(Player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
 
-        //printf("*****************\n");
-
-//         if (strncmp(buffer_in, "bye", 3) == 0) {
-//            break;
-
-
-//Ancien code bon
-
-      //   int *type = buffer_in;
-        //printf("Le type est : %d \n", *type);
-        //if(*type == 1) 
-        //{
-        //    paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
-        //    //memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
-        //    memcpy(paquetOK, buffer_in, sizeof(paquetClientInit));
-        //    int res = paquetOK->numClient;
-        //    printf("Le client %d s'est connecté ! \n", res);
-
-        //}
-
-        //printf("Avant aiguillage");
-        int usedSocket = connection->sockfd;
-        receivePacket(buffer_in, usedSocket);
+        //int usedSocket = Player->connection->sockfd;
+        receivePacket(buffer_in, Player);
         //printf("Après aiguillage");
         memset(buffer_in, '\0', BUFFERSIZE);
-
-
-
-
-#if DEBUG
-        printf("DEBUG-----------------------------------------------------------\n");
-        printf("len : %i\n", len);
-        printf("Buffer : %.*s\n", len, buffer_in);
-        printf("----------------------------------------------------------------\n");
-#endif
-        strcpy(buffer_out, "\nServer Echo : ");
-        strncat(buffer_out, buffer_in, len);
-
-        if (buffer_in[0] == '@') {
-            for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-                if (connections[i] != NULL) {
-
-                    write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
-                }
-            }
-        } else if (buffer_in[0] == '#') {
-            int client = 0;
-            int read = sscanf(buffer_in, "%*[^0123456789]%d ", &client);
-            for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-                if (client == connections[i]->index) {
-                    write(connections[i]->sockfd, buffer_out, strlen(buffer_out));
-                    break;
-                } //no client found ? : we dont care !!
-            }
-        } else {
-            //write(connection->sockfd, buffer_out, strlen(buffer_out));
-
-/*                 printf("Le Serveur envoie un packet\n\n");
-                packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-                write(connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
-                free(packetSWaitingEnd);  */
-        } 
-
-        //clear input buffer */
-        memset(buffer_in, '\0', BUFFERSIZE);
     }
-    printf("Connection to client %i ended \n", connection->index);
-    close(connection->sockfd);
-    del(connection);
-    free(connection);
+    printf("Connection to client %i ended \n", Player->connection->index);
+    close(Player->connection->sockfd);
+    del(Player);
+    free(Player);
     pthread_exit(0);
 
 }

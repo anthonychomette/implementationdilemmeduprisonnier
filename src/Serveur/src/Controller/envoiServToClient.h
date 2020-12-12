@@ -13,6 +13,8 @@
 
 #include "../packetmanager.h"
 
+
+
 #ifndef ENVOISERVTOCLIENT_H
 #define ENVOISERVTOCLIENT_H
 
@@ -51,5 +53,8 @@ void serverIsThisTheEnd(int sockfd);
 void serverIsNotThisTheEnd(int sockfd);
 //// envoi d'un packetServerIsThisTheEnd
 
+//envoi server prêt
+void serverInit(player* Player, packetClientInit *packetCInit);
+//// envoi d'un packetServerInit
 #endif /* ENVOISERVTOCLIENT_H */
 

@@ -1,9 +1,13 @@
 #include <stdbool.h>
+#include "srvcxnmanager.h"
+
+
 
 //Structure des messages côté client
 
 
-
+#include <sys/socket.h>
+//#include "srvcxnmanager.h"
 
 #ifndef PACKETMANAGER_H
 #define PACKETMANAGER_H
@@ -107,7 +111,6 @@ int type;
 int score;
 }packetServerScore;
 
-
 /* #define BUFFERSIZE 2048
 
 void *threadProcess(void * ptr);
@@ -192,8 +195,8 @@ packetServerScore * createPacketServerScore(int score);
  * @brief Fonction permettant d'aiguiller les paquet reçu vers le bon traitement suivant leurs type
  * 
  * @param buffer_in Paquet brut a determiner
- * @param socket socket pour communiquer avec le client
+ * @param player Structure Player qui contient toute les données du joueur
  */
-void receivePacket(char *buffer_in, int socket);
+void receivePacket(char *buffer_in, player* Player);
 
 #endif /* PACKETMANAGER_H */

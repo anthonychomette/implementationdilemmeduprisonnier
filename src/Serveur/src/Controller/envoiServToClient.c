@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 #include "../packetmanager.h"
+#include "../srvcxnmanager.h"
 #include "receptionClientToServ.h"
 
 /**
@@ -90,10 +90,18 @@ void serverIsNotThisTheEnd(int sockfd) {
  * Envoi d'un message qui indique que le serveur a compris le client et qu'il est prêt
  * 
  * @autor Thomas
- * @param sockfd
+ * @param Player
  */
-void serverInit(int sockfd) {
+void serverInit(player* Player, packetClientInit* packetCInit) {
+
+    //playerPool[packetCInit->numClient]->connection->sockfd = newSocket;
+    Player->ID = packetCInit->numClient;
+    
+    //playerPool[0].choice = true;
+
+    printf("**********Le socket du client est %d\n",Player->connection->sockfd);
+    printf("**********Le numClient  est %d\n",Player->ID);
     packetServerInit *packetSInit = createPacketServerInit();
-    write(sockfd, packetSInit, sizeof (packetServerInit));
+    write(Player->connection->sockfd, packetSInit, sizeof (packetServerInit));
     free(packetSInit);
 }

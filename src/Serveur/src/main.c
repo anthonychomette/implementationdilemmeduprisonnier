@@ -23,6 +23,7 @@
 #include <stdbool.h>
 
 #include "srvcxnmanager.h"
+
 #include <netinet/tcp.h>
 
 #include "fichier_confsrv.h"
@@ -31,6 +32,9 @@
 /*
  *
  */
+
+//int newSocket = 0;
+player* playerPool[100];
 
 int main(int argc, char** argv) {
 
@@ -63,8 +67,14 @@ int main(int argc, char** argv) {
         if (connection->sockfd <= 0) {
             free(connection);
         } else {
+
+            player* newPlayer;
+            newPlayer = (player *) malloc(sizeof(player*));
+            newPlayer->connection = connection;
+
+            //newSocket = connection->sockfd;
             /* start a new thread but do not wait for it */
-            pthread_create(&thread, 0, threadProcess, (void *) connection);
+            pthread_create(&thread, 0, threadProcess, (void *) newPlayer);
             pthread_detach(thread);
         }
     }
