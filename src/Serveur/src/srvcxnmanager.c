@@ -22,6 +22,7 @@
 #define TAG_AGE      "Port"
 #define TAG_ADRESS   "Somme"
 
+
 //connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
 
@@ -32,6 +33,11 @@ void init_sockets_array() {
     }
 }
 
+/**
+ * @brief Ajoute un joueur dans la playerPool
+ * 
+ * @param player Joueur à ajouter dans la playerPool
+ */
 void add(player *player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
         if (playerPool[i] == NULL) {
@@ -43,6 +49,11 @@ void add(player *player) {
     exit(-5);
 }
 
+/**
+ * @brief Supprime un joueur dans la playerPool
+ * 
+ * @param player Joueur à supprimer
+ */
 void del(player *player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
         if (playerPool[i] == player) {
@@ -53,6 +64,107 @@ void del(player *player) {
     perror("Connection not in pool ");
     exit(-5);
 }
+
+/**
+ * @brief Ajoute une partie dans la pool
+ * 
+ * @param Game Partie à ajouter
+ */
+void addGame(game* Game) {
+    for (int i = 0; i < 100; i++) {
+        if (gamePool[i] == NULL) {
+            gamePool[i] = Game;
+            return;
+        }
+    }
+    perror("Too much simultaneous Games");
+    exit(-5);
+}
+
+/**
+ * @brief Supprime une partie de la pool
+ * 
+ * @param Game Partie à supprimer
+ */
+void delGame(game* Game) {
+    for (int i = 0; i < 100; i++) {
+        if (gamePool[i] == Game) {
+            gamePool[i] = NULL;
+            return;
+        }
+    }
+    perror("Game not in pool ");
+    exit(-5);
+}
+
+/**
+ * @brief Permet de créer une partie et de l'ajouter dans la liste de partie (GamePool)
+ * 
+ * @param firstClientID ID du premier joueur
+ * @param secondClientID ID du second joueur
+ * @param numberOfRound nombre de round
+ */
+void addGameToPool(int firstClientID, int secondClientID, int numberOfRound) {
+    game* Game;
+    Game = (game *) malloc(sizeof(game*));
+    Game->firstOpponentID = firstClientID;
+    Game->secondOpponentID = secondClientID;
+    Game->roundNumber = numberOfRound;
+    addGame(Game);
+/*     printf("ID DU PREMIER ADV : %d\n", Game->firstOpponentID);
+    printf("ID DU SECOND ADV : %d\n", Game->secondOpponentID); */
+}
+
+/**
+ * @brief Fonction permettant d'attendre la connexion de deux joueurs.
+ * 
+ * @param Game Structure Game contenant les clients à attendre
+ */
+void waitGame(game* Game) {
+   
+    while(Game->firstPlayerIsConnected != true){
+        //WaitingPlayer1
+        usleep(1000);
+        //printf("PREMIEREJe boucle tant que les joueurs ne sont pas tous la !\n");
+    }
+    while(Game->secondPlayerIsConnected != true) {
+        //WaitingPlayer2
+        usleep(1000);
+        //printf("DEUXIEME boucle tant que les joueurs ne sont pas tous la !\n");
+    }
+
+/*     printf("Premier Joueur : %d\n", Game->firstOpponentID);
+    printf("Deuxième Joueur : %d\n", Game->secondOpponentID);
+    printf("Etat Premier Joueur : %d\n", Game->firstPlayerIsConnected);
+    printf("Etat Deuxième Joueur : %d\n", Game->secondPlayerIsConnected); */
+
+/*     while((Game->firstPlayerIsConnected != false) && (Game->secondPlayerIsConnected != false)){
+        //Waiting Player1 and Player2 
+        printf("Je boucle tant que les joueurs ne sont pas tous la !\n");
+    } */
+}
+
+/**
+ * @brief Cherche une partie pour le joueur donné
+ * 
+ * @param player joueur pour lequel chercher la partie correspondante 
+ */
+game * searchGame(player *player) {
+
+    for (int i = 0; i < 100; i++) {
+        if (gamePool[i]->firstOpponentID == player->ID) {
+            printf("Le joueur %d est dans la partie %d\n", player->ID, i);
+            return gamePool[i];
+        }
+        else if (gamePool[i]->secondOpponentID == player->ID) {
+            printf("Le joueur %d est dans la partie %d\n", player->ID, i);
+            return gamePool[i];
+        }
+    }
+    printf("Pas de partie pour ce joueur %d !!!\n", player->ID);
+
+}
+
 /*
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_lock(&lock);
@@ -99,7 +211,8 @@ void *threadProcess(void *ptr) {
         //printf("Après aiguillage");
         memset(buffer_in, '\0', BUFFERSIZE);
     }
-    printf("Connection to client %i ended \n", Player->connection->index);
+    //printf("Connection to client %i ended \n", Player->connection->index);
+    printf("Connection to client %i ended \n", Player->ID);
     close(Player->connection->sockfd);
     del(Player);
     free(Player);

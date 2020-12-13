@@ -53,13 +53,13 @@ void serverIsPlayerReady() {
  * @author noeline
  */
 void serverWaitingEnd() {
-    gtk_main_quit();
+/*     gtk_main_quit();
     GtkWidget *win;
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("View/PageAttente.glade");
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_attente"));
     gtk_builder_connect_signals(builder, NULL);
-    gtk_widget_show(win);
+    gtk_widget_show(win); */
 }
 
 /**

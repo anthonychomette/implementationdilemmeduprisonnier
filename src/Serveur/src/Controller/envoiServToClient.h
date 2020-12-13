@@ -34,7 +34,7 @@ void serverIsPlayerReady();
 ////packetServerIsPlayerReady
 
 //Envoi attend l'autre joueur
-void serverWaitingEnd();
+void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGame);
 //// envoi d'un packetServerWaitingEnd
 
 //Envoi début partie

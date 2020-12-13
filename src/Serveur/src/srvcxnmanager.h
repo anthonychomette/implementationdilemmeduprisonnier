@@ -31,11 +31,20 @@ typedef struct{
 connection_t *connection;
 int ID;
 bool choice;
-bool waiting;
+bool isWaiting;
 }player;
 
-extern player* playerPool[100]; //Ensemble des joueurs connectés
-extern int newSocket;
+typedef struct{
+int roundNumber;
+int firstOpponentID;
+int secondOpponentID;
+bool firstPlayerIsConnected;
+bool secondPlayerIsConnected;
+}game;
+
+extern player* playerPool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des joueurs connectés
+extern game* gamePool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des parties à jouées
+//extern int newSocket;
 
 /* typedef struct {
     int sockfd;
@@ -49,7 +58,11 @@ void add(player *player);
 void del(player *player);
 void *threadProcess(void *ptr);
 int create_server_socket() ;
-
+void addGameToPool(int firstClientID, int secondClientID, int numberOfRound);
+void delGame(game* Game);
+void addGame(game* Game);
+void waitGame(game* Game);
+game * searchGame(player *player);
 
 #endif /* SRVCXNMANAGER_H */
 

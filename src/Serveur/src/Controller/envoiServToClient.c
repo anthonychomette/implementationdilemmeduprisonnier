@@ -29,9 +29,27 @@ void serverIsPlayerReady(int sockfd) {
  * @autor noeline
  * @param sockfd
  */
-void serverWaitingEnd(int sockfd) {
+void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGame) {
+
+    printf("Client number %d is waiting\n", Player->ID);
+    game* gameToWait = searchGame(Player);
+    
+    if(gameToWait->firstOpponentID == Player->ID) {
+        gameToWait->firstPlayerIsConnected = true;
+    }
+    if(gameToWait->secondOpponentID == Player->ID) {
+        gameToWait->secondPlayerIsConnected = true;
+    }
+
+    waitGame(gameToWait);
+
     packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-    write(sockfd, packetSWaitingEnd, sizeof (packetSWaitingEnd));
+    write(Player->connection->sockfd, packetSWaitingEnd, sizeof (packetSWaitingEnd));
+
+    printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
+    
+    serverIsPlayerReady(Player->connection->sockfd);
+
     free(packetSWaitingEnd);
 }
 
@@ -99,9 +117,11 @@ void serverInit(player* Player, packetClientInit* packetCInit) {
     
     //playerPool[0].choice = true;
 
-    printf("**********Le socket du client est %d\n",Player->connection->sockfd);
-    printf("**********Le numClient  est %d\n",Player->ID);
+/*     printf("**********Le socket du client est %d\n",Player->connection->sockfd);
+    printf("**********Le numClient  est %d\n",Player->ID); */
+    printf("Client %d connected\n", Player->ID);
     packetServerInit *packetSInit = createPacketServerInit();
     write(Player->connection->sockfd, packetSInit, sizeof (packetServerInit));
+    printf("Server send an ack to client %d\n", Player->ID);
     free(packetSInit);
 }

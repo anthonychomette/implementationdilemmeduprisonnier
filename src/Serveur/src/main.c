@@ -35,6 +35,7 @@
 
 //int newSocket = 0;
 player* playerPool[100];
+game* gamePool[100];
 
 int main(int argc, char** argv) {
 
@@ -55,6 +56,8 @@ int main(int argc, char** argv) {
         fprintf(stderr, "%s: error: cannot listen on port\n", argv[0]);
         return -5;
     }
+
+    addGameToPool(4, 8, 1);
 
     printf("ready and listening\n");
 

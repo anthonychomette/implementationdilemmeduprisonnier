@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 
     
     //initView(); TODO Mettre la view dans un thread pour ne pas la rendre bloquante
-    char* ClientID = config();
+    //char* ClientID = config();
     int socketfd = open_connection();
     
     createPthread(socketfd);

@@ -129,24 +129,19 @@ packetServerScore * createPacketServerScore(int score) {
     case 1: {
         packetClientInit *packetCInit = malloc(1 * sizeof(packetClientInit));
         memcpy(packetCInit, buffer_in, sizeof(packetClientInit));
-
-        printf("Client %d connected\n", packetCInit->numClient);
+        
         //Reponse du serveur a ce packet : Je suis disponible  : ACK
         serverInit(Player, packetCInit);
-        printf("Server send an ack to client %d\n", packetCInit->numClient);
-
+        
         free(packetCInit);
         break;
     }
      case 2: {
         packetClientWaitingGame *packetCWaitingGame = malloc(1 * sizeof(packetClientWaitingGame));
         memcpy(packetCWaitingGame, buffer_in, sizeof(packetClientWaitingGame));
+
+        serverWaitingEnd(Player, packetCWaitingGame);
         
-
-        printf("Client number TODO is waiting\n");
-
-        serverWaitingEnd(socket);
-
         free(packetCWaitingGame);
         break;
     }
