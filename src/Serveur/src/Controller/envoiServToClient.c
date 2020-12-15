@@ -34,12 +34,14 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
     printf("Client number %d is waiting\n", Player->ID);
     game* gameToWait = searchGame(Player);
     
-    if(gameToWait->firstOpponentID == Player->ID) {
-        gameToWait->firstPlayerIsConnected = true;
+/*     if(gameToWait->firstOpponentID == Player->ID) {
+        gameToWait->firstPlayerIsReady = true;
     }
     if(gameToWait->secondOpponentID == Player->ID) {
-        gameToWait->secondPlayerIsConnected = true;
-    }
+        gameToWait->secondPlayerIsReady = true;
+    } */
+
+    setPlayerReady(gameToWait, Player);
 
     waitGame(gameToWait);
 
@@ -48,34 +50,88 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
 
     printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
     
+    //WorkArround TODO
+    usleep(1000);
+
+    //Reseting Player lock
+    gameToWait->firstPlayerIsReady = false;
+    gameToWait->secondPlayerIsReady = false;
+
+    printf("Server send a IsPlayerReady packet to Client %d\n", Player->ID);
     serverIsPlayerReady(Player->connection->sockfd);
 
     free(packetSWaitingEnd);
 }
 
 /**
- * Demande au cient de faire un choix
+ * @brief Envoi d'un message qui demande au client de jouer
  * 
- * @autor noeline
- * @param sockfd
+ * @param Player Joueur à modifier
+ * @param packetCPlayerReady Paquet de type clientPlayerReady à traiter 
  */
-void serverMakeChoice(int sockfd) {
-    packetServerMakeChoice *packetSMakeChoice = createPacketServerMakeChoice();
-    write(sockfd, packetSMakeChoice, sizeof (packetSMakeChoice));
-    free(packetSMakeChoice);
+void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerReady) {
+
+    if(packetCPlayerReady->playerIsReady == true) //Si le joueur est prêt
+    {
+
+        
+        setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
+        waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
+
+
+        usleep(1000);
+        //Reseting Player lock
+        gamePool[Player->lobby]->firstPlayerIsReady = false;
+        gamePool[Player->lobby]->secondPlayerIsReady = false;
+
+        packetServerMakeChoice *packetSMakeChoice = createPacketServerMakeChoice();
+        write(Player->connection->sockfd, packetSMakeChoice, sizeof (packetServerMakeChoice));
+        printf("Server send a MakeChoice packet to Client %d\n", Player->ID);
+        free(packetSMakeChoice);
+    }
+
 }
 
 /**
- * Envoi du score du round
+ * @brief Repond au client par son score
  * 
- * @autor noeline
- * @param sockfd
+ * @param Player Joueur pour le quel le score est calculé
+ * @param packetCPlayerChoice Paquet reçu contenant le choix
  */
-void serverScore(int sockfd) {
-    //TODO lecture du résultat dans le csv et remplacer le zéro par le résultat lu dans le sv
+void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) {
+    
     int result = 0;
+
+    setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
+
+    Player->choice = packetCPlayerChoice->choice; //associé le choix au joueur
+
+    waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
+    player* Opponent = getOpponent(Player); //recupérer l'autre joueur
+
+    if(Player->choice == true && Opponent->choice == false) {
+        result = 0; //il a dénoncer et l'autre n'a rien dit
+    }
+    
+    if(Player->choice == false && Opponent->choice == false) {
+        result = 6; //les 2 n'ont rien dit
+    }
+
+    if(Player->choice == true && Opponent->choice == true) {
+        result = 5; //les 2 ont dénoncer
+    }
+
+    if(Player->choice == false && Opponent->choice == true) {
+        result = 10; //l'autre à dénnoncé et lui n'a rien dit 
+    }
+
+    usleep(2000);
+    //Reseting Player lock
+    gamePool[Player->lobby]->firstPlayerIsReady = false;
+    gamePool[Player->lobby]->secondPlayerIsReady = false;
+
     packetServerScore *packetSScore = createPacketServerScore(result);
-    write(sockfd, packetSScore, sizeof (packetSScore));
+    write(Player->connection->sockfd, packetSScore, sizeof (packetSScore));
     free(packetSScore);
 }
 
@@ -98,17 +154,18 @@ void serverIsThisTheEnd(int sockfd) {
  * @autor noeline
  * @param sockfd
  */
-void serverIsNotThisTheEnd(int sockfd) {
+/* void serverIsNotThisTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(0);
     write(sockfd, packetSIsThisTheEnd, sizeof (packetSIsThisTheEnd));
     free(packetSIsThisTheEnd);
-}
+} */
 
 /**
  * Envoi d'un message qui indique que le serveur a compris le client et qu'il est prêt
  * 
  * @autor Thomas
- * @param Player
+ * @param Player Joueur à modifier
+ * @param packetCInit Paquet de type clientInit à traiter 
  */
 void serverInit(player* Player, packetClientInit* packetCInit) {
 

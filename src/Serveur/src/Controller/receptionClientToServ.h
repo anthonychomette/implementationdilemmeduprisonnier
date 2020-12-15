@@ -34,7 +34,7 @@ void servInitClient(packetClientInit packet);
 void servIsPlayerReady(packetClientPlayerReady packet);
 
 //Reception du choix 
-void servChoice(packetClientPlayerChoice packet);
+//void servChoice(packetClientPlayerChoice packet);
 //pour trahir bool choice = 1       (à vérifier dans la structure)
 //pour collaborer bool choice = 0   (à vérifier dans la structure)
 

@@ -122,12 +122,12 @@ void addGameToPool(int firstClientID, int secondClientID, int numberOfRound) {
  */
 void waitGame(game* Game) {
    
-    while(Game->firstPlayerIsConnected != true){
+    while(Game->firstPlayerIsReady != true){
         //WaitingPlayer1
         usleep(1000);
         //printf("PREMIEREJe boucle tant que les joueurs ne sont pas tous la !\n");
     }
-    while(Game->secondPlayerIsConnected != true) {
+    while(Game->secondPlayerIsReady != true) {
         //WaitingPlayer2
         usleep(1000);
         //printf("DEUXIEME boucle tant que les joueurs ne sont pas tous la !\n");
@@ -154,15 +154,62 @@ game * searchGame(player *player) {
     for (int i = 0; i < 100; i++) {
         if (gamePool[i]->firstOpponentID == player->ID) {
             printf("Le joueur %d est dans la partie %d\n", player->ID, i);
+            player->lobby = i;
             return gamePool[i];
         }
         else if (gamePool[i]->secondOpponentID == player->ID) {
             printf("Le joueur %d est dans la partie %d\n", player->ID, i);
+            player->lobby = i;
             return gamePool[i];
         }
     }
     printf("Pas de partie pour ce joueur %d !!!\n", player->ID);
 
+}
+
+/**
+ * @brief Met le joueur en attente dans la partie
+ * 
+ * @param game Partie dans la quel placer le joueur en attente
+ * @param Player Joueur a mettre en attente
+ */
+void setPlayerReady(game * game, player * Player) {
+
+    if(game->firstOpponentID == Player->ID) {
+        game->firstPlayerIsReady = true;
+    }
+    if(game->secondOpponentID == Player->ID) {
+        game->secondPlayerIsReady = true;
+    }
+}
+
+/**
+ * @brief Return the opponent for the given player
+ * 
+ * @param Player Player whose oponent is searched 
+ * @return player* Oponent of that player
+ */
+player * getOpponent(player* Player) {
+
+    game* gameToSearchOponent = searchGame(Player);
+    int oponentID = 0;
+
+    if(Player->ID == gameToSearchOponent->firstOpponentID) {
+        oponentID = gameToSearchOponent->secondOpponentID;
+    }
+    else if(Player->ID == gameToSearchOponent->secondOpponentID){
+        oponentID = gameToSearchOponent->firstOpponentID;
+    }
+    else{
+        perror("No opponent found");
+        exit(-1);
+    }
+
+    for (int i = 0; i < 100; i++) {
+        if (playerPool[i]->ID == oponentID) {
+            return playerPool[i];
+        }
+    }
 }
 
 /*
@@ -254,4 +301,3 @@ int create_server_socket() {
 
     return sockfd;
 }
-

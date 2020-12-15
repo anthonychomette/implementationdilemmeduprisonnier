@@ -148,12 +148,18 @@ packetServerScore * createPacketServerScore(int score) {
     case 3: {
         packetClientPlayerReady *packetCPlayerReady = malloc(1 * sizeof(packetClientPlayerReady));
         memcpy(packetCPlayerReady, buffer_in, sizeof(packetClientPlayerReady));
+
+        serverMakeChoice(Player, packetCPlayerReady);
+
         free(packetCPlayerReady);
         break;
     }
     case 4: {
         packetClientPlayerChoice *packetCPlayerChoice = malloc(1 * sizeof(packetClientPlayerChoice));
         memcpy(packetCPlayerChoice, buffer_in, sizeof(packetClientPlayerChoice));
+
+        serverScore(Player, packetCPlayerChoice);
+
         free(packetCPlayerChoice);
         break;
     }

@@ -32,14 +32,15 @@ connection_t *connection;
 int ID;
 bool choice;
 bool isWaiting;
+int lobby;
 }player;
 
 typedef struct{
 int roundNumber;
 int firstOpponentID;
 int secondOpponentID;
-bool firstPlayerIsConnected;
-bool secondPlayerIsConnected;
+bool firstPlayerIsReady;
+bool secondPlayerIsReady;
 }game;
 
 extern player* playerPool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des joueurs connectés
@@ -63,6 +64,9 @@ void delGame(game* Game);
 void addGame(game* Game);
 void waitGame(game* Game);
 game * searchGame(player *player);
+player * getOpponent(player *Player);
+void setPlayerReady(game * gameToWait, player * Player);
+
 
 #endif /* SRVCXNMANAGER_H */
 

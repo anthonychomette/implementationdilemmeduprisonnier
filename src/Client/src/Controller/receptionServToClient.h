@@ -30,10 +30,10 @@ void serverIsPlayerReady();
 void serverWaitingEnd();
 
 //Reception début partie
-void serverMakeChoice();
+void serverMakeChoice(int sockfd);
 
 //Reception résultats
-void serverScore(packetServerScore packet);
+void serverScore(packetServerScore *packet);
 
 //Reception fin du round ou continuer
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet);

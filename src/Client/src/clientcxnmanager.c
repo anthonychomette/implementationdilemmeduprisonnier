@@ -20,8 +20,8 @@ void *threadProcess(void * ptr) {
 
     //printf("&&&&&&& Debut ThreadProcess\n\n");
 
-    //recuperation du clientID depuis le fichier de conf
-    int clientID = 8;
+    //recuperation du clientID
+    int clientID = 8; //TODO RECUP DEPUIS LE FICHIER DE CONF
 
     //printf("Avant paquet d'Init\n\n");
     //Envoi d'un paquet d'Init

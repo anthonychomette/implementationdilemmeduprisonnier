@@ -38,23 +38,24 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
 //// envoi d'un packetServerWaitingEnd
 
 //Envoi début partie
-void serverMakeChoice(int sockfd);
+void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerReady);
 //// envoi d'un packetServerMakeChoice
 
 //Envoi résultats
-void serverScore(int sockfd);
+void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice);
 //// envoi d'un packetServerScore
 
-//Envoi fin du round 
+//Envoi fin du round ou continuer
 void serverIsThisTheEnd(int sockfd);
 //// envoi d'un packetServerIsThisTheEnd
 
 //Envoi  continuer
-void serverIsNotThisTheEnd(int sockfd);
+//void serverIsNotThisTheEnd(int sockfd);
 //// envoi d'un packetServerIsThisTheEnd
 
 //envoi server prêt
 void serverInit(player* Player, packetClientInit *packetCInit);
 //// envoi d'un packetServerInit
+
 #endif /* ENVOISERVTOCLIENT_H */
 

@@ -6,6 +6,7 @@
 
 #include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
+#include "Controller/receptionServToClient.h"
 
 //Création des paquets client
 
@@ -139,7 +140,7 @@ void receivePacket(char *buffer_in, int socket) {
     case 11: {
         packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
         memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
-        printf("Fin de l'attente : Demarrage de la partie !");
+        printf("Fin de l'attente : Demarrage de la partie !\n");
         serverWaitingEnd();
         free(packetSWaitingEnd);
         break;
@@ -148,13 +149,14 @@ void receivePacket(char *buffer_in, int socket) {
         packetServerIsPlayerReady *packetSIsPlayerReady= malloc(1 * sizeof(packetServerIsPlayerReady));
         memcpy(packetSIsPlayerReady, buffer_in, sizeof(packetServerIsPlayerReady));
         serverIsPlayerReady();
+        clientPlayerReady(socket);
         free(packetSIsPlayerReady);
         break;
     }
     case 13: {
         packetServerMakeChoice *packetSMakeChoice = malloc(1 * sizeof(packetServerMakeChoice));
         memcpy(packetSMakeChoice, buffer_in, sizeof(packetServerMakeChoice));
-        serverMakeChoice();
+        serverMakeChoice(socket);
         free(packetSMakeChoice);
         break;
     }
@@ -167,7 +169,7 @@ void receivePacket(char *buffer_in, int socket) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
-        //serverScore();
+        serverScore(packetSScore);
         free(packetSScore);
         break;
     }
