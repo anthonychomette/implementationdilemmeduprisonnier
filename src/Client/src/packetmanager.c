@@ -10,6 +10,12 @@
 
 //Création des paquets client
 
+/**
+ * @brief Créer un paquet Client : ClientInit
+ * 
+ * @param clientID Numéro d'identification du client
+ * @return packetClientInit* pointeur sur le paquet
+ */
 packetClientInit * createPacketClientInit(int clientID) {
     
     packetClientInit *clientInit;

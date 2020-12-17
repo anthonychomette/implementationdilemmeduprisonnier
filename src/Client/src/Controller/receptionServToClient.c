@@ -130,7 +130,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100, "Vous n'avez pas été trahis \n Aucune comdamnation");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous n'avez pas été trahis \n Aucune comdamnation\n");
+            printf("Vous n'avez pas été trahis\n Aucune comdamnation\n");
             break;
         }
         case 6:
@@ -139,7 +139,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt,100, "Vous n'avez pas été trahis \n Comdamnation : 6 mois");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous n'avez pas été trahis \n Comdamnation : 6 mois\n");
+            printf("Vous n'avez pas été trahis\n Comdamnation : 6 mois\n");
             break;
         }
         case 5:
@@ -148,7 +148,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt,100, "Vous avez été trahis \n Comdamnation : 5 ans");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous avez été trahis \n Comdamnation : 5 ans");
+            printf("Vous avez été trahis\nComdamnation : 5 ans\n");
             break;
         }
         case 10:
@@ -157,7 +157,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100,"Vous avez été trahis \n Comdamnation : 10 ans");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous avez été trahis \n Comdamnation : 10 ans\n");
+            printf("Vous avez été trahis\nComdamnation : 10 ans\n");
             break;
         }
     }
