@@ -47,8 +47,9 @@ packetClientPlayerChoice * createPacketClientPlayerChoice(bool choice) {
     packetClientPlayerChoice *playerChoice;
     playerChoice = malloc(1 * sizeof(packetClientPlayerChoice));
 
+    //printf("Packet manager a pris votre thrahison en compte!!!!!!\n");
     playerChoice->type = 4; //Type 4 Le choix du joueur est collaborer : 0 ou trahir : 1
-    playerChoice->choice = true;
+    playerChoice->choice = choice;
 
     return playerChoice;
 

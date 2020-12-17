@@ -196,9 +196,11 @@ player * getOpponent(player* Player) {
 
     if(Player->ID == gameToSearchOponent->firstOpponentID) {
         oponentID = gameToSearchOponent->secondOpponentID;
+        //printf ("Le joueur numéro %d a pour adversaire le joueur %d\n", Player->ID, oponentID);
     }
     else if(Player->ID == gameToSearchOponent->secondOpponentID){
         oponentID = gameToSearchOponent->firstOpponentID;
+        //printf ("Le joueur numéro %d a pour adversaire le joueur %d\n", Player->ID, oponentID);
     }
     else{
         perror("No opponent found");

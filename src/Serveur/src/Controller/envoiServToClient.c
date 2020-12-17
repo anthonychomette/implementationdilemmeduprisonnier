@@ -102,6 +102,7 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     
     int result = 0;
 
+    printf("Lobby du joueur %d : %d\n", Player->ID, Player->lobby);
     setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
 
     Player->choice = packetCPlayerChoice->choice; //associé le choix au joueur
@@ -124,6 +125,8 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     if(Player->choice == false && Opponent->choice == true) {
         result = 10; //l'autre à dénnoncé et lui n'a rien dit 
     }
+
+    printf("Result = %d\n", result);
 
     usleep(2000);
     //Reseting Player lock

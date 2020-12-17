@@ -11,6 +11,7 @@
 
 #include "../packetmanager.h"
 #include "receptionServToClient.h"
+#include "envoiClientToServ.h"
 
 GtkBuilder *builder = NULL;
 
@@ -95,9 +96,11 @@ void serverMakeChoice(int sockfd) {
     printf("Choix bon\n");
 
     if (choix == 'T') {
+        printf("Vous avez choisis de trahir !!!!!!!!!\n");
         clientChoiceBetray(sockfd);
     }
     else if (choix == 'C') {
+        printf("Vous avez choisis de Collaborer !!!!!!!!!\n");
         clientChoiceCollabore(sockfd);
     }
     else {
@@ -127,7 +130,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100, "Vous n'avez pas été trahis \n Aucune comdamnation");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous n'avez pas été trahis \n Aucune comdamnation");
+            printf("Vous n'avez pas été trahis \n Aucune comdamnation\n");
             break;
         }
         case 6:
@@ -136,7 +139,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt,100, "Vous n'avez pas été trahis \n Comdamnation : 6 mois");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous n'avez pas été trahis \n Comdamnation : 6 mois");
+            printf("Vous n'avez pas été trahis \n Comdamnation : 6 mois\n");
             break;
         }
         case 5:
@@ -154,7 +157,7 @@ void serverScore(packetServerScore *packet) {
 /*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100,"Vous avez été trahis \n Comdamnation : 10 ans");
             gtk_label_set_text(GTK_LABEL(lblResultat), txt); */
-            printf("Vous avez été trahis \n Comdamnation : 10 ans");
+            printf("Vous avez été trahis \n Comdamnation : 10 ans\n");
             break;
         }
     }
