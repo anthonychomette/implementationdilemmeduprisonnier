@@ -32,7 +32,7 @@ void servIsPlayerReady(packetClientPlayerReady packet);
 //pour trahir bool choice = 1       (à vérifier dans la structure)
 //pour collaborer bool choice = 0   (à vérifier dans la structure)
 
-
+void initView();
 
 #endif /* RECEPTIONCLIENTTOSERV_H */
 
