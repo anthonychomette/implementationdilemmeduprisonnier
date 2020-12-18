@@ -1,4 +1,13 @@
-
+/**
+ * @file srvcxnmanager.c
+ * @author Thomas
+ * @brief 
+ * @version 0.1
+ * @date 2020-12-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,10 +32,11 @@
 #define TAG_ADRESS   "Somme"
 
 
-//connection_t* connections[MAXSIMULTANEOUSCLIENTS];
 
-
-
+/**
+ * @brief Initalise le tableau de sockets
+ * 
+ */
 void init_sockets_array() {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
         playerPool[i] = NULL;
@@ -36,12 +46,12 @@ void init_sockets_array() {
 /**
  * @brief Ajoute un joueur dans la playerPool
  * 
- * @param player Joueur à ajouter dans la playerPool
+ * @param Player Joueur à ajouter dans la playerPool
  */
-void add(player *player) {
+void add(player *Player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
         if (playerPool[i] == NULL) {
-            playerPool[i] = player;
+            playerPool[i] = Player;
             return;
         }
     }
@@ -52,11 +62,11 @@ void add(player *player) {
 /**
  * @brief Supprime un joueur dans la playerPool
  * 
- * @param player Joueur à supprimer
+ * @param Player Joueur à supprimer
  */
-void del(player *player) {
+void del(player *Player) {
     for (int i = 0; i < MAXSIMULTANEOUSCLIENTS; i++) {
-        if (playerPool[i] == player) {
+        if (playerPool[i] == Player) {
             playerPool[i] = NULL;
             return;
         }
@@ -125,23 +135,11 @@ void waitGame(game* Game) {
     while(Game->firstPlayerIsReady != true){
         //WaitingPlayer1
         usleep(1000);
-        //printf("PREMIEREJe boucle tant que les joueurs ne sont pas tous la !\n");
     }
     while(Game->secondPlayerIsReady != true) {
         //WaitingPlayer2
         usleep(1000);
-        //printf("DEUXIEME boucle tant que les joueurs ne sont pas tous la !\n");
     }
-
-/*     printf("Premier Joueur : %d\n", Game->firstOpponentID);
-    printf("Deuxième Joueur : %d\n", Game->secondOpponentID);
-    printf("Etat Premier Joueur : %d\n", Game->firstPlayerIsConnected);
-    printf("Etat Deuxième Joueur : %d\n", Game->secondPlayerIsConnected); */
-
-/*     while((Game->firstPlayerIsConnected != false) && (Game->secondPlayerIsConnected != false)){
-        //Waiting Player1 and Player2 
-        printf("Je boucle tant que les joueurs ne sont pas tous la !\n");
-    } */
 }
 
 /**
@@ -168,18 +166,18 @@ game * searchGame(player *player) {
 }
 
 /**
- * @brief Met le joueur en attente dans la partie
+ * @brief Place le joueur en attente dans la partie
  * 
- * @param game Partie dans la quel placer le joueur en attente
- * @param Player Joueur a mettre en attente
+ * @param Game Partie dans la quel placer le joueur en attente
+ * @param Player Joueur à mettre en attente
  */
-void setPlayerReady(game * game, player * Player) {
+void setPlayerReady(game * Game, player * Player) {
 
-    if(game->firstOpponentID == Player->ID) {
-        game->firstPlayerIsReady = true;
+    if(Game->firstOpponentID == Player->ID) {
+        Game->firstPlayerIsReady = true;
     }
-    if(game->secondOpponentID == Player->ID) {
-        game->secondPlayerIsReady = true;
+    if(Game->secondOpponentID == Player->ID) {
+        Game->secondPlayerIsReady = true;
     }
 }
 
@@ -230,7 +228,6 @@ void *threadProcess(void *ptr) {
     char buffer_out[BUFFERSIZE];
 
     int len;
-    //connection_t *connection;
     player *Player;
 
     if (!ptr) pthread_exit(0);
@@ -239,28 +236,12 @@ void *threadProcess(void *ptr) {
 
     add(Player);
 
-    //Welcome the new client
-    /*printf("Welcome #%i\n", connection->index);
-    sprintf(buffer_out, "Welcome #%i\n", connection->index);
-    write(connection->sockfd, buffer_out, strlen(buffer_out));
-
-        int *type = buffer_in;
-        printf("Le type est : %d ", *type);
-        if(*type == 1) 
-        {
-            paquetClientInit *paquetOK = malloc(1 * sizeof(paquetClientInit));
-            memcpy(buffer_in, paquetOK, sizeof(paquetClientInit));
-            printf("Le client %d s'est connecté ! ", paquetOK->numClient);
-        }*/
-    //printf("#######Avant boucle\n");
+    //Tant qu'on reçoit des données
     while ((len = read(Player->connection->sockfd, buffer_in, BUFFERSIZE)) > 0) {
-
-        //int usedSocket = Player->connection->sockfd;
         receivePacket(buffer_in, Player);
-        //printf("Après aiguillage");
         memset(buffer_in, '\0', BUFFERSIZE);
     }
-    //printf("Connection to client %i ended \n", Player->connection->index);
+    
     printf("Connection to client %i ended \n", Player->ID);
     close(Player->connection->sockfd);
     del(Player);

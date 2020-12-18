@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   envoiServToClient.h
  * Author: student
@@ -29,33 +23,19 @@ extern "C" {
 }
 #endif
 
-//Envoi de la partie a faire êtes vous prets ?
+
+
+
 void serverIsPlayerReady();
-////packetServerIsPlayerReady
-
-//Envoi attend l'autre joueur
 void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGame);
-//// envoi d'un packetServerWaitingEnd
-
-//Envoi début partie
 void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerReady);
-//// envoi d'un packetServerMakeChoice
-
-//Envoi résultats
 void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice);
-//// envoi d'un packetServerScore
-
-//Envoi fin du round ou continuer
 void serverIsThisTheEnd(int sockfd);
-//// envoi d'un packetServerIsThisTheEnd
-
-//Envoi  continuer
-//void serverIsNotThisTheEnd(int sockfd);
-//// envoi d'un packetServerIsThisTheEnd
-
-//envoi server prêt
 void serverInit(player* Player, packetClientInit *packetCInit);
-//// envoi d'un packetServerInit
+void serverItIsNotTheEnd(int sockfd);
+
+
+
 
 #endif /* ENVOISERVTOCLIENT_H */
 

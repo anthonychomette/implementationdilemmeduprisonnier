@@ -1,14 +1,18 @@
-/* 
- * Fichier de traitement du packet recu de la part du serveur
- * 
+/**
+ * @file receptionServToClient.c
  * @author noeline
+ * @brief Fichier de traitement des paquets reçu de la part du serveur
+ * @version 0.1
+ * @date 2020-12-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <gtk/gtk.h>
-
 #include "../packetmanager.h"
 #include "receptionServToClient.h"
 #include "envoiClientToServ.h"
@@ -16,9 +20,8 @@
 GtkBuilder *builder = NULL;
 
 /**
- * Affichage de la premiere page de la page de l'experience
+ * @brief Affichage de la premiere page de la page de l'experience
  * 
- * @author noeline
  */
 void initView() {
     GtkWidget *win;
@@ -33,9 +36,8 @@ void initView() {
 
 
 /**
- * Affichage de la page pour savoir si le client est pret
+ * @brief Affichage de la page pour savoir si le client est pret
  * 
- * @author noeline
  */
 void serverIsPlayerReady() {
 /*     gtk_main_quit();
@@ -58,9 +60,8 @@ void serverIsPlayerReady() {
 }
 
 /**
- * Affichage de la page d'attente
+ * @brief Affichage de la page d'attente
  * 
- * @author noeline
  */
 void serverWaitingEnd() {
 /*     gtk_main_quit();
@@ -73,9 +74,9 @@ void serverWaitingEnd() {
 }
 
 /**
- * Affichage de la page pour faire le choix
+ * @brief Affichage de la page pour faire le choix
  * 
- * @author noeline
+ * @param sockfd Socket de la connexion, pour envoyer la réponse
  */
 void serverMakeChoice(int sockfd) {
 /*     gtk_main_quit();
@@ -110,10 +111,9 @@ void serverMakeChoice(int sockfd) {
 }
 
 /**
- * reception du résultat
+ * @brief reception du résultat
  * 
- * @author noeline
- * @param packet
+ * @param packet Paquet de résultat reçu
  */
 void serverScore(packetServerScore *packet) {
 /*     gtk_main_quit();
@@ -168,10 +168,9 @@ void serverScore(packetServerScore *packet) {
 }
 
 /**
- * Envoi de la fin de la partie ou non
+ * @brief Reception de la fin de la partie ou non
  * 
- * @author noeline
- * @param packet
+ * @param packet Paquet reçu de type : packetServerIsThisTheEnd
  */
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet) {
     switch (packet.gameEnd) {

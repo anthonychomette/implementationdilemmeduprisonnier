@@ -12,11 +12,9 @@
 #include "envoiClientToServ.h"
 
 /**
- * Envoi du packet des informations du client
- * 
- * @autor noeline
- * @param sockfd
- * @param clientID
+ * @brief Envoi du paquet : informations du client
+ * @param sockfd Socket de la connexion
+ * @param clientID Numéro d'identification du client
  */
 void clientInitClient(int sockfd, int clientID) {
     packetClientInit *packetCInit = createPacketClientInit(clientID);
@@ -25,9 +23,8 @@ void clientInitClient(int sockfd, int clientID) {
 }
 
 /**
- * @brief  Envoi du packet En attente de partie
- * @autor Thomas
- * @param sockfd 
+ * @brief Envoi du paquet : en attente de partie
+ * @param sockfd Socket de la connexion
  */
 void ClientWaitingGame(int sockfd) {
     packetClientWaitingGame *packetWaiting = createPacketClientWaitingGame();
@@ -36,10 +33,8 @@ void ClientWaitingGame(int sockfd) {
 }
 
 /**
- * Envoi du packet client pret
- * 
- * @autor noeline
- * @param sockfd
+ * @brief Envoi du paquet : client prêt
+ * @param sockfd Socket de la connexion
  */
 void clientPlayerReady(int sockfd) {
     packetClientPlayerReady *packetCPlayerReady = createPacketClientPlayerReady();
@@ -49,10 +44,8 @@ void clientPlayerReady(int sockfd) {
 }
 
 /**
- * Envoi du packet client collabore
- * 
- * @autor noeline
- * @param sockfd
+ * Envoi du paquet : client collabore
+ * @param sockfd Socket de la connexion
  */
 void clientChoiceCollabore(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(0);
@@ -62,10 +55,8 @@ void clientChoiceCollabore(int sockfd) {
 }
 
 /**
- * Envoi du packet client trahis
- * 
- * @autor noeline
- * @param sockfd
+ * Envoi du packet : client trahis
+ * @param sockfd Socket de la connexion
  */
 void clientChoiceBetray(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(1);

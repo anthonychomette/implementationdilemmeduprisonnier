@@ -1,3 +1,13 @@
+/**
+ * @file clientcxnmanager.c
+ * @author Thomas
+ * @brief 
+ * @version 0.1
+ * @date 2020-12-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,45 +23,40 @@
 #include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
 
+/**
+ * @brief Processus du thread
+ * 
+ * @param ptr 
+ * @return void* 
+ */
 void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
 
-    //printf("&&&&&&& Debut ThreadProcess\n\n");
-
     //recuperation du clientID
     int clientID = 8; //TODO RECUP DEPUIS LE FICHIER DE CONF
 
-    //printf("Avant paquet d'Init\n\n");
-    //Envoi d'un paquet d'Init
-    clientInitClient(sockfd, clientID);
-    //printf("paquet d'Init\n\n");
+    clientInitClient(sockfd, clientID); //Envoi d'un paquet d'init avec le ClientID
 
-    //usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire
-
-    //Envoi d'un paquet d'Attente
-    //ClientWaitingGame(sockfd);
-    //usleep(100000); //Pause de 10 ms ne pas utiliser normalement mais obligatoire */
-
-    //printf("&&&&&&& Mid ThreadProcess\n\n");
     while ((len = read(sockfd, buffer_in, BUFFERSIZE)) != 0) {
-        //printf("&&&&&&& WHILE ThreadProcess\n\n");
         receivePacket(buffer_in, sockfd);
     }
-
-    //printf("&&&&&&& Fin ThreadProcess\n\n");
 
     close(sockfd);
     printf("client pthread ended, len=%d\n", len);
 }
 
+/**
+ * @brief Ouvre une connexion avec le serveur
+ * 
+ * @return int Socket de la connexion ouverte
+ */
 int open_connection() {
-    //printf("&&&&&&&&&&&&Debut open connection\n\n");
-    int sockfd;
 
-    struct sockaddr_in serverAddr;
+    int sockfd;
     int port = 7799;
+    struct sockaddr_in serverAddr;
 
     // Create the socket. 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -63,8 +68,10 @@ int open_connection() {
     //Configure settings of the server address
     // Address family is Internet 
     serverAddr.sin_family = AF_INET;
+
     //Set port number, using htons function 
     serverAddr.sin_port = htons(port);
+
     //Set IP address to localhost
     serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
@@ -75,39 +82,21 @@ int open_connection() {
         printf("Fail to connect to server");
         exit(-1);
     };
-
-    //printf("&&&&&&&&&&&&FIN open connection\n\n");
     return sockfd;
 }
 
-/* int createSocket() {
-    int sockfd = open_connection();
-    return sockfd;
-} */
-
+/**
+ * @brief Permet de créer un thread
+ * 
+ * @param sockfd Socket de la connexion
+ */
 void createPthread(int sockfd) {
-
-
 
     int status = 0;
     char bufferOut[1000];
     pthread_t thread;
 
-    //clientInitClient(sockfd, 4);
-
     //Creation d'un pthread de lecture
     pthread_create(&thread, 0, threadProcess, &sockfd);
-
-    //clientInitClient(sockfd, 5);
-
-    //write(connection->sock,"Main APP Still running",15);
-
-    printf("Detachement du phthread !!!\n");
     pthread_join(thread, NULL);
-/*       do {
-        fgets(bufferOut, 100, stdin);
-        //printf("sending : %s\n", msg);
-        status = write(sockfd, bufferOut, strlen(bufferOut));
-        //memset(msg,'\0',100);
-    } while (status != -1); */
 }

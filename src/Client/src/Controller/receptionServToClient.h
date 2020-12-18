@@ -23,22 +23,18 @@ extern "C" {
 }
 #endif
 
-//Reception de la partie a faire êtes vous prets ?
+
+
+
 void serverIsPlayerReady();
-
-//Reception attend l'autre joueur
 void serverWaitingEnd();
-
-//Reception début partie
 void serverMakeChoice(int sockfd);
-
-//Reception résultats
 void serverScore(packetServerScore *packet);
-
-//Reception fin du round ou continuer
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet);
-
 void initView();
+
+
+
 
 #endif /* RECEPTIONSERVTOCLIENT_H */
 

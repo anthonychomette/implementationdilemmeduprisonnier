@@ -1,7 +1,12 @@
-/* 
- * Fichier de gestion de l'envoi des données du serveur au client
+/**
+ * @file envoiServToClient.c
+ * @author noeline
+ * @brief Fichier de gestion de l'envoi des données du serveur au client
+ * @version 0.1
+ * @date 2020-12-17
  * 
- * @autor noeline
+ * @copyright Copyright (c) 2020
+ * 
  */
 
 #include <stdio.h>
@@ -12,10 +17,9 @@
 #include "receptionClientToServ.h"
 
 /**
- * Demander si le client est pret
+ * @brief Envoi un paquet pour demander si le client est pret
  * 
- * @autor noeline
- * @param sockfd
+ * @param sockfd Socket de la connexion
  */
 void serverIsPlayerReady(int sockfd) {
     packetServerIsPlayerReady *packetSIsPlayerReady = createPacketServerIsPlayerReady();
@@ -24,40 +28,36 @@ void serverIsPlayerReady(int sockfd) {
 }
 
 /**
- * Sort le client de l'attente
+ * @brief Envoi un paquet pour sortir le client de l'attente
  * 
- * @autor noeline
- * @param sockfd
+ * @param Player Joueur à sortir de l'attente
+ * @param packetCWaitingGame Dernier paquet reçu du client à traiter
  */
 void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGame) {
 
     printf("Client number %d is waiting\n", Player->ID);
     game* gameToWait = searchGame(Player);
     
-/*     if(gameToWait->firstOpponentID == Player->ID) {
-        gameToWait->firstPlayerIsReady = true;
-    }
-    if(gameToWait->secondOpponentID == Player->ID) {
-        gameToWait->secondPlayerIsReady = true;
-    } */
-
+    //Se souvenir que le joueur est prêt et attendre l'autre joueur
     setPlayerReady(gameToWait, Player);
-
     waitGame(gameToWait);
 
+    //Envoi du paquet
     packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
     write(Player->connection->sockfd, packetSWaitingEnd, sizeof (packetSWaitingEnd));
-
     printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
     
-    //WorkArround TODO
-    usleep(1000);
+    //WorkArround Ne pas supprimer !!! 
+    usleep(1000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    //Reseting Player lock
+    //Remise à zéro de l'attente client
     gameToWait->firstPlayerIsReady = false;
     gameToWait->secondPlayerIsReady = false;
 
     printf("Server send a IsPlayerReady packet to Client %d\n", Player->ID);
+
+    //Envoyer un paquet pour demander si le jouer est prêt
     serverIsPlayerReady(Player->connection->sockfd);
 
     free(packetSWaitingEnd);
@@ -74,16 +74,20 @@ void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerRead
     if(packetCPlayerReady->playerIsReady == true) //Si le joueur est prêt
     {
 
-        
-        setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
-        waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
+        //Se souvenir que le joueur est prêt et attendre l'autre joueur
+        setPlayerReady(gamePool[Player->lobby], Player);
+        waitGame(gamePool[Player->lobby]);
 
+        //WorkArround Ne pas supprimer !!! 
+        usleep(1000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        usleep(1000);
-        //Reseting Player lock
+        //Remise à zéro de l'attente client
         gamePool[Player->lobby]->firstPlayerIsReady = false;
         gamePool[Player->lobby]->secondPlayerIsReady = false;
 
+
+        //Envoyer le paquet
         packetServerMakeChoice *packetSMakeChoice = createPacketServerMakeChoice();
         write(Player->connection->sockfd, packetSMakeChoice, sizeof (packetServerMakeChoice));
         printf("Server send a MakeChoice packet to Client %d\n", Player->ID);
@@ -104,10 +108,9 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
 
     printf("Lobby du joueur %d : %d\n", Player->ID, Player->lobby);
     setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
-
     Player->choice = packetCPlayerChoice->choice; //associé le choix au joueur
-
     waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
+
     player* Opponent = getOpponent(Player); //recupérer l'autre joueur
 
     if(Player->choice == true && Opponent->choice == false) {
@@ -119,7 +122,7 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     }
 
     if(Player->choice == true && Opponent->choice == true) {
-        result = 5; //les 2 ont dénoncer
+        result = 5; //les 2 ont dénoncés
     }
 
     if(Player->choice == false && Opponent->choice == true) {
@@ -133,6 +136,7 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     gamePool[Player->lobby]->firstPlayerIsReady = false;
     gamePool[Player->lobby]->secondPlayerIsReady = false;
 
+    //Envoi du paquet
     packetServerScore *packetSScore = createPacketServerScore(result);
     write(Player->connection->sockfd, packetSScore, sizeof (packetSScore));
     free(packetSScore);
@@ -140,10 +144,9 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
 
 
 /**
- * Envoi du message de fin de l'experience
+ * @brief Envoi du message de fin de l'experience
  * 
- * @autor noeline
- * @param sockfd
+ * @param sockfd Socket de la connexion
  */
 void serverIsThisTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(1);
@@ -152,33 +155,26 @@ void serverIsThisTheEnd(int sockfd) {
 }
 
 /**
- * Envoi d'un message qui stipule que ce n'est pas la fin
+ * @brief Envoi d'un message qui stipule que ce n'est pas la fin
  * 
- * @autor noeline
- * @param sockfd
+ * @param sockfd Socket de la connexion
  */
-/* void serverIsNotThisTheEnd(int sockfd) {
+void serverItIsNotTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(0);
     write(sockfd, packetSIsThisTheEnd, sizeof (packetSIsThisTheEnd));
     free(packetSIsThisTheEnd);
-} */
+}
 
 /**
- * Envoi d'un message qui indique que le serveur a compris le client et qu'il est prêt
+ * @brief Envoi d'un message qui indique que le serveur a compris le client et qu'il est prêt
  * 
- * @autor Thomas
  * @param Player Joueur à modifier
- * @param packetCInit Paquet de type clientInit à traiter 
+ * @param packetCInit Paquet de type clientInit à traiter
  */
 void serverInit(player* Player, packetClientInit* packetCInit) {
 
-    //playerPool[packetCInit->numClient]->connection->sockfd = newSocket;
     Player->ID = packetCInit->numClient;
     
-    //playerPool[0].choice = true;
-
-/*     printf("**********Le socket du client est %d\n",Player->connection->sockfd);
-    printf("**********Le numClient  est %d\n",Player->ID); */
     printf("Client %d connected\n", Player->ID);
     packetServerInit *packetSInit = createPacketServerInit();
     write(Player->connection->sockfd, packetSInit, sizeof (packetServerInit));

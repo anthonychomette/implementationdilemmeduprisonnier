@@ -1,3 +1,13 @@
+/**
+ * @file packetmanager.c
+ * @author Thomas
+ * @brief Gestion des paquets du Client: Création, aiguillage pour la réception
+ * @version 0.1
+ * @date 2020-12-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,10 +18,12 @@
 #include "Controller/envoiClientToServ.h"
 #include "Controller/receptionServToClient.h"
 
-//Création des paquets client
+
+
 
 /**
- * @brief Créer un paquet Client : ClientInit
+ * 
+ * @brief Créer un paquet de type 1 : Initialisation Client, ClientInit
  * 
  * @param clientID Numéro d'identification du client
  * @return packetClientInit* pointeur sur le paquet
@@ -27,6 +39,11 @@ packetClientInit * createPacketClientInit(int clientID) {
     return clientInit;
 }
 
+/**
+ * @brief Créer un paquet de type 2 : Attente Client, ClientWaitingGame
+ * 
+ * @return packetClientWaitingGame* pointeur sur le paquet
+ */
 packetClientWaitingGame * createPacketClientWaitingGame() {
 
     packetClientWaitingGame *WaitingGame;
@@ -37,6 +54,11 @@ packetClientWaitingGame * createPacketClientWaitingGame() {
     return WaitingGame;
 }
 
+/**
+ * @brief Créer un paquet de type 3 : Joueur Prêt ?, ClientPlayerReady
+ * 
+ * @return packetClientPlayerReady* pointeur sur le paquet
+ */
 packetClientPlayerReady * createPacketClientPlayerReady() {
     
     packetClientPlayerReady *PlayerReady;
@@ -48,6 +70,12 @@ packetClientPlayerReady * createPacketClientPlayerReady() {
     return PlayerReady;
 }
 
+/**
+ * @brief Créer un paquet de type 4 : choix Client, ClientPlayerChoice
+ * 
+ * @param choice choix du client : false si il collabore, true si il trahis
+ * @return packetClientPlayerChoice* pointeur sur le paquet
+ */
 packetClientPlayerChoice * createPacketClientPlayerChoice(bool choice) {
 
     packetClientPlayerChoice *playerChoice;
@@ -61,70 +89,12 @@ packetClientPlayerChoice * createPacketClientPlayerChoice(bool choice) {
 
 }
 
-
-//Création des paquets serveur
-packetServerInit * createPacketServerInit() {
-    
-    packetServerInit *serverInit;
-    serverInit = malloc(1 * sizeof(packetServerInit));
-
-    serverInit->type = 10; //Type 10 Message Bonjour Client X, la connexion a été établie
-    serverInit->ServerReady = true;
-
-    return serverInit;
-}
-
-packetServerWaitingEnd * createPacketServerWaitingEnd() {
-
-    packetServerWaitingEnd *WaitingEnd;
-    WaitingEnd = malloc(1 * sizeof(packetServerInit));
-
-    WaitingEnd->type = 11; //Type 11 Message Sortez de votre attente SVP une partie va démarrer !
-
-    return WaitingEnd;
-}
-
-packetServerIsPlayerReady * createPacketServerIsPlayerReady() {
-    
-    packetServerIsPlayerReady *IsPlayerReady;
-    IsPlayerReady = malloc(1 * sizeof(packetServerIsPlayerReady));
-
-    IsPlayerReady->type = 12; //Type 12 Message Demander a votre joueur si il est prêt
-
-    return IsPlayerReady;
-}
-
-packetServerMakeChoice * createPacketServerMakeChoice() {
-
-    packetServerMakeChoice *MakeChoice;
-    MakeChoice = malloc(1 * sizeof(packetServerIsPlayerReady));
-
-    MakeChoice->type = 13; //Type 13 Message Faites vos jeux.
-
-    return MakeChoice;
-
-}
-
-packetServerIsThisTheEnd * createPacketServerIsThisTheEnd(bool end){
-
-    packetServerIsThisTheEnd *IsThisTheEnd;
-    IsThisTheEnd = malloc(1 * sizeof(packetServerIsThisTheEnd));
-
-    IsThisTheEnd->type = 14; //Type 14 Message Est-ce la fin ?
-    IsThisTheEnd->gameEnd = end;
-    return IsThisTheEnd;
-}
-
-packetServerScore * createPacketServerScore(int score) {
-
-    packetServerScore *Score;
-    Score = malloc(1 * sizeof(packetServerScore));
-
-    Score->type = 15; //Type 15 Voici votre score
-    Score->score = score;
-    return Score;
-}
-
+/**
+ * @brief Aiguillage des paquets reçu du serveur vers les bonnes fonctions de traitement
+ * 
+ * @param buffer_in buffer d'entrée
+ * @param socket Socket de la connexion
+ */
 void receivePacket(char *buffer_in, int socket) {
 
     int *type = buffer_in;
@@ -182,7 +152,6 @@ void receivePacket(char *buffer_in, int socket) {
     }
     default: {
         perror("Erreur de reception du paquet : type non défini !!!");
-        //printf("%d",type);
         break;
     }
 

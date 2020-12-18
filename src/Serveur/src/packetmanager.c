@@ -1,3 +1,13 @@
+/**
+ * @file packetmanager.c
+ * @author Thomas
+ * @brief 
+ * @version 0.1
+ * @date 2020-12-17
+ * 
+ * @copyright Copyright (c) 2020
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,54 +18,12 @@
 #include "packetmanager.h"
 
 
-//Création des paquets client
 
-packetClientInit * createPacketClientInit(int clientID) {
-    
-    packetClientInit *clientInit;
-    clientInit = malloc(1 * sizeof(packetClientInit));     //free() liberer espace
-
-    clientInit->type = 1; //Type 1 Message je suis connecté et je suis le client X
-    clientInit->numClient = clientID;
-
-    return clientInit;
-}
-
-packetClientWaitingGame * createPacketClientWaitingGame() {
-
-    packetClientWaitingGame *WaitingGame;
-    WaitingGame = malloc(1 * sizeof(WaitingGame));
-
-    WaitingGame->type = 2; //Type 2 Je suis en attente d'une partie
-
-    return WaitingGame;
-}
-
-packetClientPlayerReady * createPacketClientPlayerReady() {
-    
-    packetClientPlayerReady *PlayerReady;
-    PlayerReady = malloc(1 * sizeof(packetClientPlayerReady));
-
-    PlayerReady->type = 3; //Type 3 Mon Joueur est prêt / pas prêt
-    PlayerReady->playerIsReady = true;
-
-    return PlayerReady;
-}
-
-packetClientPlayerChoice * createPacketClientPlayerChoice(bool choice) {
-
-    packetClientPlayerChoice *playerChoice;
-    playerChoice = malloc(1 * sizeof(packetClientPlayerChoice));
-
-    playerChoice->type = 4; //Type 4 Le choix du joueur est collaborer : 0 ou trahir : 1
-    playerChoice->choice = true;
-
-    return playerChoice;
-
-}
-
-
-//Création des paquets serveur
+/**
+ * @brief Fonction permettant de créer un paquet ServerInit
+ * 
+ * @return packetServerInit* Pointeur sur le paquet
+ */
 packetServerInit * createPacketServerInit() {
     
     packetServerInit *serverInit;
@@ -67,6 +35,11 @@ packetServerInit * createPacketServerInit() {
     return serverInit;
 }
 
+/**
+ * @brief Fonction permettant de créer un paquet ServerWaitingEnd
+ * 
+ * @return packetServerWaitingEnd* Pointeur sur le paquet
+ */
 packetServerWaitingEnd * createPacketServerWaitingEnd() {
 
     packetServerWaitingEnd *WaitingEnd;
@@ -77,6 +50,11 @@ packetServerWaitingEnd * createPacketServerWaitingEnd() {
     return WaitingEnd;
 }
 
+/**
+ * @brief Fonction permettant de créer un paquet ServerIsPlayerReady
+ * 
+ * @return packetServerIsPlayerReady* Pointeur sur le paquet
+ */
 packetServerIsPlayerReady * createPacketServerIsPlayerReady() {
     
     packetServerIsPlayerReady *IsPlayerReady;
@@ -87,6 +65,11 @@ packetServerIsPlayerReady * createPacketServerIsPlayerReady() {
     return IsPlayerReady;
 }
 
+/**
+ * @brief Fonction permettant de créer un paquet ServerMakeChoice
+ * 
+ * @return packetServerMakeChoice* Pointeur sur le paquet
+ */
 packetServerMakeChoice * createPacketServerMakeChoice() {
 
     packetServerMakeChoice *MakeChoice;
@@ -98,6 +81,12 @@ packetServerMakeChoice * createPacketServerMakeChoice() {
 
 }
 
+/**
+ * @brief Fonction permettant de créer un paquet ServerIsThisTheEnd
+ * 
+ * @param end True : C'est la fin, False ce n'est pas la fin
+ * @return packetServerIsThisTheEnd* Pointeur sur le paquet
+ */
 packetServerIsThisTheEnd * createPacketServerIsThisTheEnd(bool end){
 
     packetServerIsThisTheEnd *IsThisTheEnd;
@@ -108,6 +97,12 @@ packetServerIsThisTheEnd * createPacketServerIsThisTheEnd(bool end){
     return IsThisTheEnd;
 }
 
+/**
+ * @brief Fonction permettant de créer un paquet ServerScore
+ * 
+ * @param score Score du joueur
+ * @return packetServerScore* pointeur sur le paquet
+ */
 packetServerScore * createPacketServerScore(int score) {
 
     packetServerScore *Score;
@@ -118,6 +113,12 @@ packetServerScore * createPacketServerScore(int score) {
     return Score;
 }
 
+/**
+ * @brief Fonction permettant d'aiguiller les paquet reçu vers le bon traitement suivant leurs type
+ * 
+ * @param buffer_in Paquet brut a determiner
+ * @param Player Structure player qui contient toute les données du joueur
+ */
  void receivePacket(char *buffer_in, player* Player) {
 
     int *type = buffer_in;

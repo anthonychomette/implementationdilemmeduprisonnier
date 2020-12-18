@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   srvcxnmanager.h
  * Author: aurelio
@@ -18,41 +12,43 @@
 #define BUFFERSIZE 2048
 #define MAXSIMULTANEOUSCLIENTS 100
 
-
+/**
+ * @brief Structure connection_t contenant les paramètres de connexion
+ * 
+ */
 typedef struct {
-    int sockfd;
-    struct sockaddr address;
-    int addr_len;
-    int index;
+    int sockfd; /*!< Socket de la connexion */
+    struct sockaddr address; /*!< Adresse IP */
+    int addr_len; /*!< Taille Adresse */
+    int index; /*!< Index */
 } connection_t;
 
+/**
+ * @brief Structure player contenant les informations du joueur
+ * 
+ */
 typedef struct{
-//int socket;
-connection_t *connection;
-int ID;
-bool choice;
-bool isWaiting;
-int lobby;
+connection_t *connection; /*!< paramètres de connexion du joueur */
+int ID; /*!< Identifiant du joueur */
+bool choice; /*!< Choix du joueur */
+bool isWaiting; /*!< True : Le joueur est en attente, False : Il n'est pas en attente */
+int lobby; /*!< lobby du joueur */
 }player;
 
+/**
+ * @brief Structure game contenant les informations de la partie
+ * 
+ */
 typedef struct{
-int roundNumber;
-int firstOpponentID;
-int secondOpponentID;
-bool firstPlayerIsReady;
-bool secondPlayerIsReady;
+int roundNumber; /*!< Nombre de round pour la partie */
+int firstOpponentID; /*!< Premier adversaire de la partie */
+int secondOpponentID; /*!< Second adversaire de la partie */
+bool firstPlayerIsReady; /*!< Premier adversaire prêt ?*/
+bool secondPlayerIsReady; /*!< Second adversaire prêt ?*/
 }game;
 
 extern player* playerPool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des joueurs connectés
 extern game* gamePool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des parties à jouées
-//extern int newSocket;
-
-/* typedef struct {
-    int sockfd;
-    struct sockaddr address;
-    int addr_len;
-    int index;
-} connection_t; */
 
 void init_sockets_array();
 void add(player *player);
@@ -66,6 +62,8 @@ void waitGame(game* Game);
 game * searchGame(player *player);
 player * getOpponent(player *Player);
 void setPlayerReady(game * gameToWait, player * Player);
+
+
 
 
 #endif /* SRVCXNMANAGER_H */
