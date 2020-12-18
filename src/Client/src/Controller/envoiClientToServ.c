@@ -10,6 +10,7 @@
 #include <gtk/gtk.h>
 #include "../packetmanager.h"
 #include "envoiClientToServ.h"
+#include "receptionServToClient.h"
 
 /**
  * @brief Envoi du paquet : informations du client
@@ -40,7 +41,6 @@ void clientPlayerReady(int sockfd) {
     packetClientPlayerReady *packetCPlayerReady = createPacketClientPlayerReady();
     write(sockfd, packetCPlayerReady, sizeof (packetCPlayerReady));
     free(packetCPlayerReady);
-    gtk_main_quit();
 }
 
 /**
@@ -51,7 +51,7 @@ void clientChoiceCollabore(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(0);
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
-    gtk_main_quit();
+    choiceToScore();
 }
 
 /**
@@ -62,5 +62,6 @@ void clientChoiceBetray(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(1);
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
-    gtk_main_quit();
+    choiceToScore();
 }
+

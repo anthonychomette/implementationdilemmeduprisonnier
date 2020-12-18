@@ -64,11 +64,11 @@ void initView() {
 void serverIsPlayerReady() {
 
     
-    char confirmation = 'N';
-    do {
-        printf("Entrez O pour confirmer que vous etes prêt à lancer la partie : \n");
-        scanf("%c", &confirmation);
-    }while(confirmation != 'O');
+//    char confirmation = 'N';
+//    do {
+//        printf("Entrez O pour confirmer que vous etes prêt à lancer la partie : \n");
+//        scanf("%c", &confirmation);
+//    }while(confirmation != 'O');
 
 
     //hide la precedente
@@ -160,8 +160,13 @@ void serverScore(packetServerScore *packet, int socket) {
     gtk_init(0, NULL);
     builder = gtk_builder_new_from_file("View/PageResultat.glade");
     win = GTK_WIDGET(gtk_builder_get_object(builder, "app_resultat")); */
+    
+    
+    
     //hide precedente
-        
+    gtk_widget_hide(winAttente);
+
+    
     char txt[100];
     switch (packet->score) {
         case 0:
@@ -241,4 +246,11 @@ void serverIsThisTheEnd(packetServerIsThisTheEnd packet) {
         }
     }
 
+}
+
+void choiceToScore(){
+    gtk_widget_hide(winChoix);
+    //affichag page attente
+    gtk_widget_show(winAttente);
+    gtk_main();
 }
