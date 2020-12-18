@@ -55,8 +55,8 @@ Puis éxécuter la commande : `make documentation`
 
 ## Auteurs
 
-*Noëline Miet 
-*Thomas Risi
-*Anthony Chomette
-*Paul Meunier
+- Noëline Miet 
+- Thomas Risi
+- Anthony Chomette
+- Paul Meunier
 
