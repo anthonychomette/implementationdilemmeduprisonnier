@@ -20,7 +20,7 @@ Le projet est décomposé en deux parties : un serveur et un nombre défini de c
 Ce qu'il est requis pour commencer avec notre projet :
 
 - Gestion des parties par le serveur
-- Utilisation d'une View par le client 
+- Utilisation d'une View pour l'affichage pour le client 
 - Configuration du serveur (ip, port)
 - Configuration des clients (id)
 
