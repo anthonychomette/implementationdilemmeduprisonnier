@@ -32,7 +32,7 @@ void serverMakeChoice(int sockfd);
 void serverScore(packetServerScore *packet);
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet);
 void initView();
-
+void choiceToScore();
 
 
 
