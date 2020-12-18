@@ -13,7 +13,7 @@ Dans cette expérience, il y a 3 issues possibles :
 
 ## Pour commencer
 
-Le projet est décomposé en deux parties : un serveur et n client qui jouent ensemble.
+Le projet est décomposé en deux parties : un serveur et un nombre défini de client qui jouent ensemble.
 
 ### Pré-requis
 
