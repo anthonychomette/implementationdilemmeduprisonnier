@@ -34,19 +34,19 @@ GtkWidget *winResultat;
  */
 void initView() {
     gtk_init(0, NULL);
-    builder = gtk_builder_new_from_file("output/View/PageAttente.glade");
+    builder = gtk_builder_new_from_file("View/PageAttente.glade");
     winAttente = GTK_WIDGET(gtk_builder_get_object(builder, "PageAttente "));
     
     gtk_init(0, NULL);
-    builder = gtk_builder_new_from_file("output/View/PageJeSuisPret.glade");
+    builder = gtk_builder_new_from_file("View/PageJeSuisPret.glade");
     winPret = GTK_WIDGET(gtk_builder_get_object(builder, "PageJeSuisPret"));
     
     gtk_init(0, NULL);
-    builder = gtk_builder_new_from_file("output/View/PageChoix.glade");
+    builder = gtk_builder_new_from_file("View/PageChoix.glade");
     winChoix = GTK_WIDGET(gtk_builder_get_object(builder, "PageChoix"));
     
     gtk_init(0, NULL);
-    builder = gtk_builder_new_from_file("output/View/PageResultat.glade");
+    builder = gtk_builder_new_from_file("View/PageResultat.glade");
     winResultat = GTK_WIDGET(gtk_builder_get_object(builder, "PageResultat "));
     
     gtk_builder_connect_signals(builder, NULL);

@@ -40,7 +40,7 @@ void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
-    clientInfos = config();
+    clientInfos = config(); //récupération des infos clients
     int clientID = atoi(clientInfos->IdClient);
 
     clientInitClient(sockfd, clientID); //Envoi d'un paquet d'init avec le ClientID
@@ -104,5 +104,6 @@ void createPthread(int sockfd) {
 
     //Creation d'un pthread de lecture
     pthread_create(&thread, 0, threadProcess, &sockfd);
+    initView();
     pthread_join(thread, NULL);
 }

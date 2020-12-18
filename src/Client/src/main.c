@@ -33,12 +33,9 @@ extern GtkBuilder *builder;
 int main(int argc, char** argv) {
 
     
-    //initView(); TODO Mettre la view dans un thread pour ne pas la rendre bloquante
-    //char* ClientID = config();
     int socketfd = open_connection();
     
     createPthread(socketfd);
-    
+    //initView();
     return (EXIT_SUCCESS);
 }
-

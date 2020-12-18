@@ -75,8 +75,7 @@ int main(int argc, char** argv) {
             player* newPlayer;
             newPlayer = (player *) malloc(sizeof(player*));
             newPlayer->connection = connection;
-
-            //newSocket = connection->sockfd;
+            
             /* start a new thread but do not wait for it */
             pthread_create(&thread, 0, threadProcess, (void *) newPlayer);
             pthread_detach(thread);
