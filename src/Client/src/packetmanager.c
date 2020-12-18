@@ -146,7 +146,7 @@ void receivePacket(char *buffer_in, int socket) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
-        serverScore(packetSScore);
+        serverScore(packetSScore, socket);
         free(packetSScore);
         break;
     }

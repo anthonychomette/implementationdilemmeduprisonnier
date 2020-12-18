@@ -7,6 +7,8 @@
 #include<string.h>
 #include "confreadwrite.h"
 #include "ini.h"
+#include <stdlib.h>
+
 static int handler(void* user,const char* section,const char* name,const char* value)
 {
     configuration* pconfig = (configuration*)user;
@@ -23,13 +25,14 @@ static int handler(void* user,const char* section,const char* name,const char* v
     }
     return 1;
  }
-int config(){
-    configuration config;
+configuration * config(){
+    configuration* Configuration = malloc(1 * sizeof(configuration));
     
-    if (ini_parse("conf.ini", handler,&config) < 0) {
+    if (ini_parse("./conf.ini", handler,Configuration) < 0) {
         printf ("Cant't load 'conf.ini'\n");
         return;
     }
-    printf("Config loaded from 'conf.ini' : ip=%s, port=%s\n IdClient=%s", config.ip, config.port, config.IdClient);
-    return config.IdClient;
+
+    printf("Config loaded from 'conf.ini' : ip=%s, port=%s\n IdClient=%s\n", Configuration->ip, Configuration->port, Configuration->IdClient);
+    return Configuration;
 }

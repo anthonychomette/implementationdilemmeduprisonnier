@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
         return -5;
     }
 
-    addGameToPool(4, 8, 1);
+    addGameToPool(4, 8, 4);
 
     printf("ready and listening\n");
 

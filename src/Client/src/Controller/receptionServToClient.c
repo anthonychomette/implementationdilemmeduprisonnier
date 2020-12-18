@@ -114,8 +114,9 @@ void serverMakeChoice(int sockfd) {
  * @brief reception du résultat
  * 
  * @param packet Paquet de résultat reçu
+ * @param socket Socket de la connexion
  */
-void serverScore(packetServerScore *packet) {
+void serverScore(packetServerScore *packet, int socket) {
 /*     gtk_main_quit();
     GtkWidget *win = NULL;
     gtk_init(0, NULL);
@@ -161,6 +162,7 @@ void serverScore(packetServerScore *packet) {
             break;
         }
     }
+    ClientWaitingGame(socket);
 
 /*     gtk_builder_connect_signals(builder, NULL);
     gtk_widget_show(win);

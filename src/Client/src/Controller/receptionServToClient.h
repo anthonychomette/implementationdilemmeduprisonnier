@@ -29,7 +29,7 @@ extern "C" {
 void serverIsPlayerReady();
 void serverWaitingEnd();
 void serverMakeChoice(int sockfd);
-void serverScore(packetServerScore *packet);
+void serverScore(packetServerScore *packet, int socket);
 void serverIsThisTheEnd(packetServerIsThisTheEnd packet);
 void initView();
 

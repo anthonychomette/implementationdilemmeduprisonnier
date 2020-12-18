@@ -11,17 +11,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <pthread.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include <netinet/tcp.h>
-
 #include "clientcxnmanager.h"
 #include "packetmanager.h"
 #include "Controller/envoiClientToServ.h"
+#include "confreadwrite.h"
+
+
+
+configuration* clientInfos;
+
+
+
+
 
 /**
  * @brief Processus du thread
@@ -33,9 +40,8 @@ void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
-
-    //recuperation du clientID
-    int clientID = 8; //TODO RECUP DEPUIS LE FICHIER DE CONF
+    clientInfos = config();
+    int clientID = atoi(clientInfos->IdClient);
 
     clientInitClient(sockfd, clientID); //Envoi d'un paquet d'init avec le ClientID
 

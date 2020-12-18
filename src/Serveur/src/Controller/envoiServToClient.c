@@ -15,6 +15,7 @@
 #include "../packetmanager.h"
 #include "../srvcxnmanager.h"
 #include "receptionClientToServ.h"
+#include <unistd.h>
 
 /**
  * @brief Envoi un paquet pour demander si le client est pret
@@ -41,14 +42,24 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
     //Se souvenir que le joueur est prêt et attendre l'autre joueur
     setPlayerReady(gameToWait, Player);
     waitGame(gameToWait);
-
-    //Envoi du paquet
-    packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
-    write(Player->connection->sockfd, packetSWaitingEnd, sizeof (packetSWaitingEnd));
-    printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
     
+    if(gamePool[Player->lobby]->roundNumber <=0) { //si il n'y a plus de round
+        //Envoi du paquet pour terminer la partie
+        packetServerIsThisTheEnd *packetSItIsTheEnd = createPacketServerIsThisTheEnd(true);
+        write(Player->connection->sockfd, packetSItIsTheEnd, sizeof (packetServerIsThisTheEnd));
+        free(packetSItIsTheEnd);
+    }
+    else {
+        //Envoi du paquet pour commencer le round
+        packetServerWaitingEnd *packetSWaitingEnd = createPacketServerWaitingEnd();
+        write(Player->connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
+        printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
+        free(packetSWaitingEnd);
+    }
+
+
     //WorkArround Ne pas supprimer !!! 
-    usleep(1000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
+    usleep(2000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     //Remise à zéro de l'attente client
@@ -59,8 +70,6 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
 
     //Envoyer un paquet pour demander si le jouer est prêt
     serverIsPlayerReady(Player->connection->sockfd);
-
-    free(packetSWaitingEnd);
 }
 
 /**
@@ -138,8 +147,10 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
 
     //Envoi du paquet
     packetServerScore *packetSScore = createPacketServerScore(result);
-    write(Player->connection->sockfd, packetSScore, sizeof (packetSScore));
+    write(Player->connection->sockfd, packetSScore, sizeof (packetServerScore));
     free(packetSScore);
+
+    gamePool[Player->lobby]->roundNumber--;
 }
 
 
