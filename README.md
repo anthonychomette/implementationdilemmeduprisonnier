@@ -54,7 +54,7 @@ Pour le serveur :
 Puis éxécuter la commande : `make documentation`
 
 ## Auteurs
-
+[@Noëline Miet]
 @Noëline Miet 
 @Thomas Risi
 @Anthony Chomette
