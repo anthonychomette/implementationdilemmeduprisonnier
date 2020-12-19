@@ -7,7 +7,7 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS	:= -Wall -Wextra -g -lpthread `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0`  -rdynamic
+CFLAGS	:= -Wall -Wextra -g -lpthread `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0` -rdynamic
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
