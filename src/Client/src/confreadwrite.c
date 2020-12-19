@@ -9,6 +9,15 @@
 #include "ini.h"
 #include <stdlib.h>
 
+/**
+ * @brief Récupère les données dans le .ini
+ * 
+ * @param user 
+ * @param section 
+ * @param name 
+ * @param value 
+ * @return int return 0 si pas de problèmes
+ */
 static int handler(void* user,const char* section,const char* name,const char* value)
 {
     configuration* pconfig = (configuration*)user;
@@ -25,6 +34,12 @@ static int handler(void* user,const char* section,const char* name,const char* v
     }
     return 1;
  }
+
+ /**
+  * @brief Return les données lues dans le .ini
+  * 
+  * @return configuration* Structure configuration avec la config
+  */
 configuration * config(){
     configuration* Configuration = malloc(1 * sizeof(configuration));
     

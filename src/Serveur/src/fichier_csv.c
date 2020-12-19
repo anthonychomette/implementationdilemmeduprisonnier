@@ -11,9 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "fichier_csv.h"
 
+/**
+ * @brief Ouvre le fichier CSV
+ * 
+ */
 void csvFile(){
 FILE *fichier;
 fichier = fopen("./fichier_csv.csv", "a");
@@ -23,6 +26,11 @@ fichier = fopen("./fichier_csv.csv", "a");
     } 
     fclose(fichier);
 }
+
+/**
+ * @brief Lis et écris le fichier CSV
+ * 
+ */
 void csvWriteAndRead(){
     //const char* separators=",";
     char buffer[80];

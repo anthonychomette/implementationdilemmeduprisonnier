@@ -29,6 +29,7 @@
 //int newSocket = 0;
 player* playerPool[100];
 game* gamePool[100];
+configuration* serveurInfos;
 
 /**
  * @brief Fonction principale du serveur
@@ -43,7 +44,7 @@ int main(int argc, char** argv) {
     int index = 1;
     connection_t *connection;
     pthread_t thread;
-    //config();
+    serveurInfos = config();
     //csvFile();
     //csvWriteAndRead();
     /* init array*/
@@ -57,7 +58,7 @@ int main(int argc, char** argv) {
         return -5;
     }
 
-    addGameToPool(4, 8, 2);
+    addGameToPool(4, 8, 2); //Rajoute une partie dans le Serveur : ICI Client 4 contre Client 8 avec deux rounds
 
     printf("ready and listening\n");
 

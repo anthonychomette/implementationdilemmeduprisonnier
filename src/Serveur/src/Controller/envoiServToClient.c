@@ -168,7 +168,7 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
  */
 void serverIsThisTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(1);
-    write(sockfd, packetSIsThisTheEnd, sizeof (packetSIsThisTheEnd));
+    write(sockfd, packetSIsThisTheEnd, sizeof (packetServerIsThisTheEnd));
     free(packetSIsThisTheEnd);
 }
 
@@ -179,7 +179,7 @@ void serverIsThisTheEnd(int sockfd) {
  */
 void serverItIsNotTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(0);
-    write(sockfd, packetSIsThisTheEnd, sizeof (packetSIsThisTheEnd));
+    write(sockfd, packetSIsThisTheEnd, sizeof (packetServerIsThisTheEnd));
     free(packetSIsThisTheEnd);
 }
 

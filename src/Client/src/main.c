@@ -39,6 +39,6 @@ int main(int argc, char** argv) {
     //XInitThreads();
     
     createPthread(socketfd);
-    //initView();
+    //initView(); //démarrage de l'interface graphique GTK
     return (EXIT_SUCCESS);
 }

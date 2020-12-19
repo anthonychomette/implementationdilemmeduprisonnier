@@ -20,6 +20,7 @@
 #include "srvcxnmanager.h"
 #include <netinet/tcp.h>
 #include "packetmanager.h"
+#include "fichier_confsrv.h"
 
 
 #define BEGIN        '{'
@@ -123,8 +124,6 @@ void addGameToPool(int firstClientID, int secondClientID, int numberOfRound) {
     Game->SecondPlayer = NULL;
     Game->roundNumber = numberOfRound*2;
     addGame(Game);
-/*     printf("ID DU PREMIER ADV : %d\n", Game->firstOpponentID);
-    printf("ID DU SECOND ADV : %d\n", Game->secondOpponentID); */
 }
 
 /**
@@ -245,10 +244,16 @@ void *threadProcess(void *ptr) {
 
 }
 
+/**
+ * @brief Créé un socket de connexion
+ * 
+ * @return int Return le socket de la connexion créée
+ */
 int create_server_socket() {
     int sockfd = -1;
     struct sockaddr_in address;
-    int port = 7799;
+    int port = atoi(serveurInfos->port);
+    //int port = 7799;
 
     /* create socket */
     sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -264,7 +269,7 @@ int create_server_socket() {
     //address.sin_addr.s_addr = INADDR_ANY;
     //ou 0.0.0.0 
     //Sinon  127.0.0.1
-    address.sin_addr.s_addr = inet_addr("0.0.0.0");
+    address.sin_addr.s_addr = inet_addr(serveurInfos->ip);
     address.sin_port = htons(port);
 
     /* prevent the 60 secs timeout */

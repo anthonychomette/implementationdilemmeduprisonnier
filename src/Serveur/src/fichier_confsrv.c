@@ -16,7 +16,15 @@
 
 #include "fichier_confsrv.h"
 
-
+/**
+ * @brief Lis les données dans le .ini
+ * 
+ * @param user 
+ * @param section 
+ * @param name 
+ * @param value 
+ * @return int return 0 si pas de problèmes
+ */
 static int handler(void* user, const char* section, const char* name,
                    const char* value)
 {
@@ -33,15 +41,18 @@ static int handler(void* user, const char* section, const char* name,
     }
     return 1;
 }
+/**
+ * @brief Return les données lues dans le .ini
+ * 
+ * @return configuration* Pointeur sur une structure configuration ayant toutes les données récupérées
+ */
+configuration* config(){
+   configuration* config = malloc(1 * sizeof(configuration));
 
-int config(){
-   configuration config;;
-
-    if (ini_parse("Fichier_conf.ini", handler, &config) < 0) {
+    if (ini_parse("Fichier_conf.ini", handler, config) < 0) {
         printf("Can't load 'Fichier_conf.ini'\n");
         return;
     }
-    printf("Config loaded from 'Fichier_conf.ini': ip=%s, port=%s\n", config.ip, config.port);
-    return config.ip;
-    return config.port;
+    printf("Config loaded from 'Fichier_conf.ini': ip=%s, port=%s\n", config->ip, config->port);
+    return config;
 }

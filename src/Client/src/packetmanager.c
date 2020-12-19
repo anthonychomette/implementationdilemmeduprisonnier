@@ -81,7 +81,6 @@ packetClientPlayerChoice * createPacketClientPlayerChoice(bool choice) {
     packetClientPlayerChoice *playerChoice;
     playerChoice = malloc(1 * sizeof(packetClientPlayerChoice));
 
-    //printf("Packet manager a pris votre thrahison en compte!!!!!!\n");
     playerChoice->type = 4; //Type 4 Le choix du joueur est collaborer : 0 ou trahir : 1
     playerChoice->choice = choice;
 
@@ -115,8 +114,10 @@ void receivePacket(char *buffer_in, int socket) {
     case 11: {
         packetServerWaitingEnd *packetSWaitingEnd = malloc(1 * sizeof(packetServerWaitingEnd));
         memcpy(packetSWaitingEnd, buffer_in, sizeof(packetServerWaitingEnd));
+
         printf("Fin de l'attente : Demarrage de la partie !\n");
         serverWaitingEnd();
+
         free(packetSWaitingEnd);
         break;
     }
@@ -151,7 +152,9 @@ void receivePacket(char *buffer_in, int socket) {
     case 15: {
         packetServerScore *packetSScore = malloc(1 * sizeof(packetServerScore));
         memcpy(packetSScore, buffer_in, sizeof(packetServerScore));
+
         serverScore(packetSScore, socket);
+        
         free(packetSScore);
         break;
     }

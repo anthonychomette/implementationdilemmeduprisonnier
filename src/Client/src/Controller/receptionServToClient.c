@@ -205,7 +205,7 @@ void serverScore(packetServerScore *packet, int socket) {
             break;
         }
     }
-    sleep(10);
+    sleep(10); //attente de 10s avant prochaine partie
     ClientWaitingGame(socket);
 
 

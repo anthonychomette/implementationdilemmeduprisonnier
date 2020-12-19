@@ -5,6 +5,7 @@
  */
 
 #include <sys/socket.h>
+#include "fichier_confsrv.h"
 
 #ifndef SRVCXNMANAGER_H
 #define SRVCXNMANAGER_H
@@ -41,10 +42,10 @@ int lobby; /*!< lobby du joueur */
  */
 typedef struct{
 int roundNumber; /*!< Nombre de round pour la partie (x2 pour le bon fonctionnement du programme)*/
-player* FirstPlayer;
-player* SecondPlayer;
-int firstOpponentID;
-int secondOpponentID;
+player* FirstPlayer; /*!< Structure du Premier joueur */
+player* SecondPlayer; /*!< Structure du Deuxième joueur */
+int firstOpponentID; /*!< Identifiant du premier joueur */
+int secondOpponentID; /*!< Identifiant du deuxième joueur */
 }game;
 
 extern player* playerPool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des joueurs connectés
@@ -62,7 +63,7 @@ void waitGame(game* Game);
 game * searchGame(player *player);
 player * getOpponent(player *Player);
 void setPlayerReady(player * Player);
-
+extern configuration* serveurInfos;
 
 
 
