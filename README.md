@@ -53,11 +53,59 @@ Pour le serveur :
 `cd /implementationdilemmeduprisonnier/src/Serveur`
 Puis éxécuter la commande : `make documentation`
 
-###Configurer la connectivité
+## Configurer le Client
 
-Allez dans le fichier conf.ini qui se trouve dans 
+Pour configurer le Client :
+Allez dans le fichier conf.ini qui se trouve dans :
+`/implementationdilemmeduprisonnier/src/Client/output`
+Modifier l'ardresse ip par celle du serveur dans le champ : "ip"
+Le port par celui du serveur dans le champ : "port".
+Et enfin l'identifiant client dans le champ : "IdClient"
+
+## Ex de fichier de config Client
+`
+[owner]
+name=anthony
+organization=cpe
+
+[database]
+ip=127.0.0.1
+port=7799
+IdClient=8
+`
+
+## Configurer le Serveur
+
+
+Pour configurer le Serveur :
+Allez dans le fichier Fichier_conf.ini qui se trouve dans :
+`/implementationdilemmeduprisonnier/src/Serveur/output`
+Modifier l'ardresse ip par celle souhaitée dans le champ : "ip"
+Le port par celui souhaité dans le champ : "port".
+
+
+## Ex de fichier de config Serveur
+`
+[Information]
+ip=0.0.0.0
+port=7799
+`
+
+## Lancer le Client et le Serveur
+
+**Attention vous devez lancer le serveur dans le dossier où il se trouve !!!**
+Ex :
+Le serveur se trouve dans : `/implementationdilemmeduprisonnier/src/Serveur/output`
+`cd /implementationdilemmeduprisonnier/src/Serveur/output`
+Pour l'éxécuter : `./Server.out`
+
+Pour le client de la même manière :
+Le Client se trouve dans : `/implementationdilemmeduprisonnier/src/Client/output`
 `cd /implementationdilemmeduprisonnier/src/Client/output`
-et modifier l'ardresse ip de par la votre si le client est sur un poste differents du serveur.
+Pour l'éxécuter : `./Client.out`
+
+**Attention pour tester le Serveur Utiliser le client 4 et le client 8 !!!**
+Pour cela utiliser deux client avec comme identifiant : 4 et 8.
 
 ## Auteurs
 
