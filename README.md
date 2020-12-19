@@ -53,6 +53,12 @@ Pour le serveur :
 `cd /implementationdilemmeduprisonnier/src/Serveur`
 Puis éxécuter la commande : `make documentation`
 
+###Configurer la connectivité
+
+Allez dans le fichier conf.ini qui se trouve dans 
+`cd /implementationdilemmeduprisonnier/src/Client/output`
+et modifier l'ardresse ip de par la votre si le client est sur un poste differents du serveur.
+
 ## Auteurs
 
 - Noëline Miet 
