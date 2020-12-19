@@ -22,6 +22,7 @@
 //#include <X11/Xlib.h>
 
 extern GtkBuilder *builder;
+configuration* clientInfos;
 
 /**
  * @brief Fonction principale du programme
@@ -32,11 +33,11 @@ extern GtkBuilder *builder;
  */
 int main(int argc, char** argv) {
 
-    
+    clientInfos = config();
     int socketfd = open_connection();
 
     //XInitThreads();
-
+    
     createPthread(socketfd);
     //initView();
     return (EXIT_SUCCESS);

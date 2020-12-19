@@ -25,7 +25,7 @@
 
 
 
-configuration* clientInfos;
+
 
 
 
@@ -41,7 +41,6 @@ void *threadProcess(void * ptr) {
     char buffer_in[BUFFERSIZE];
     int sockfd = *((int *) ptr);
     int len;
-    clientInfos = config(); //récupération des infos clients
     int clientID = atoi(clientInfos->IdClient);
 
     clientInitClient(sockfd, clientID); //Envoi d'un paquet d'init avec le ClientID
@@ -62,7 +61,8 @@ void *threadProcess(void * ptr) {
 int open_connection() {
 
     int sockfd;
-    int port = 7799;
+    //int port = 7799;
+    int port = atoi(clientInfos->port);
     struct sockaddr_in serverAddr;
 
     // Create the socket. 
@@ -80,7 +80,7 @@ int open_connection() {
     serverAddr.sin_port = htons(port);
 
     //Set IP address to localhost
-    serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    serverAddr.sin_addr.s_addr = inet_addr(clientInfos->ip);
 
     memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 

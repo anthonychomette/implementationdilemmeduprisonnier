@@ -10,7 +10,7 @@
  *
  */
 
-
+#include "confreadwrite.h"
 #ifndef CLIENTCXNMANAGER_H
 #define CLIENTCXNMANAGER_H
 #define BUFFERSIZE 2048
@@ -21,6 +21,11 @@
 void *threadProcess(void * ptr);
 int open_connection();
 void createPthread(int sockfd);
+
+
+
+
+extern configuration* clientInfos;
 
 
 
