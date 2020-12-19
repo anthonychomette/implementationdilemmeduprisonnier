@@ -31,7 +31,7 @@ typedef struct{
 connection_t *connection; /*!< paramètres de connexion du joueur */
 int ID; /*!< Identifiant du joueur */
 bool choice; /*!< Choix du joueur */
-bool isWaiting; /*!< True : Le joueur est en attente, False : Il n'est pas en attente */
+bool isReady; /*!< True : Le joueur est en prêt, False : Il n'est pas prêt*/
 int lobby; /*!< lobby du joueur */
 }player;
 
@@ -40,11 +40,11 @@ int lobby; /*!< lobby du joueur */
  * 
  */
 typedef struct{
-int roundNumber; /*!< Nombre de round pour la partie */
-int firstOpponentID; /*!< Premier adversaire de la partie */
-int secondOpponentID; /*!< Second adversaire de la partie */
-bool firstPlayerIsReady; /*!< Premier adversaire prêt ?*/
-bool secondPlayerIsReady; /*!< Second adversaire prêt ?*/
+int roundNumber; /*!< Nombre de round pour la partie (x2 pour le bon fonctionnement du programme)*/
+player* FirstPlayer;
+player* SecondPlayer;
+int firstOpponentID;
+int secondOpponentID;
 }game;
 
 extern player* playerPool[MAXSIMULTANEOUSCLIENTS]; //Ensemble des joueurs connectés
@@ -61,7 +61,7 @@ void addGame(game* Game);
 void waitGame(game* Game);
 game * searchGame(player *player);
 player * getOpponent(player *Player);
-void setPlayerReady(game * gameToWait, player * Player);
+void setPlayerReady(player * Player);
 
 
 

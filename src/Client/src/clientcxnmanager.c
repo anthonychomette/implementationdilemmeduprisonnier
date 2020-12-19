@@ -24,6 +24,7 @@
 
 
 
+
 configuration* clientInfos;
 
 
@@ -104,6 +105,6 @@ void createPthread(int sockfd) {
 
     //Creation d'un pthread de lecture
     pthread_create(&thread, 0, threadProcess, &sockfd);
-    initView();
+    //initView();
     pthread_join(thread, NULL);
 }

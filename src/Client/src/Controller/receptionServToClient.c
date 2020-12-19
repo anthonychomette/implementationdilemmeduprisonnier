@@ -63,20 +63,19 @@ void initView() {
  */
 void serverIsPlayerReady() {
 
-    
-//    char confirmation = 'N';
-//    do {
-//        printf("Entrez O pour confirmer que vous etes prêt à lancer la partie : \n");
-//        scanf("%c", &confirmation);
-//    }while(confirmation != 'O');
-
+    char confirmation = 'N';
+    while(confirmation != 'O') {
+        printf("\e[1;1H\e[2J"); //Clear screen
+        printf("Entrez O pour confirmer que vous etes prêt à lancer la partie : \n");
+        scanf("%c", &confirmation);
+    }
 
     //hide la precedente
-    gtk_widget_hide(winAttente);
+    //gtk_widget_hide(winAttente);
     
 //    gtk_builder_connect_signals(builder, NULL);
-    gtk_widget_show(winPret);
-    gtk_main();
+/*     gtk_widget_show(winPret);
+    gtk_main(); */
 }
 
 /**
@@ -99,9 +98,9 @@ void serverWaitingEnd() {
 //    builder = gtk_builder_new_from_file("View/PageAttente.glade");
 //    win = GTK_WIDGET(gtk_builder_get_object(builder, "app_attente"));
 //    gtk_builder_connect_signals(builder, NULL);
-    gtk_widget_hide(winPret);
+/*     gtk_widget_hide(winPret);
     gtk_widget_show(winAttente);
-    gtk_main();
+    gtk_main(); */
 }
 
 /**
@@ -119,32 +118,28 @@ void serverMakeChoice(int sockfd) {
     gtk_builder_connect_signals(builder, NULL);
     gtk_widget_show(win); */
 
-     gtk_widget_hide(winAttente);
-     gtk_widget_show(winChoix);
+/*      gtk_widget_hide(winAttente);
+     gtk_widget_show(winChoix); */
     
-//    char choix = 'N';
-//
-//    do {
-//        printf("Faites votre choix : \n Soit de trahir votre allié, Entrez 'T',\n Ou au contraire de collaborer, Entrez 'C'\n");
-//        scanf("%c", &choix);
-//    }while(choix != 'T' && choix != 'C');
-//
-//    printf("Choix bon\n");
-//
-//    if (choix == 'T') {
-////        printf("Vous avez choisis de trahir !!!!!!!!!\n");
-//        clientChoiceBetray(sockfd);
-//    }
-//    else if (choix == 'C') {
-////        printf("Vous avez choisis de Collaborer !!!!!!!!!\n");
-//        clientChoiceCollabore(sockfd);
-//    }
-//    else {
-//        perror("invalid choice");
-//    }
-//
-   
-    
+    char choix = 'N';
+
+    while(choix != 'T' && choix != 'C') {
+        printf("\e[1;1H\e[2J"); //Clear screen
+        printf("Faites votre choix : \n Soit de trahir votre allié, Entrez 'T',\n Ou au contraire de collaborer, Entrez 'C'\n");
+        scanf("%c", &choix);
+    }
+    printf("\e[1;1H\e[2J"); //Clear Screen
+    if (choix == 'T') {
+        printf("Vous avez choisis de trahir.\n");
+        clientChoiceBetray(sockfd);
+    }
+    else if (choix == 'C') {
+        printf("Vous avez choisis de Collaborer.\n");
+        clientChoiceCollabore(sockfd);
+    }
+    else {
+        perror("invalid choice");
+    }
 }
 
 /**
@@ -164,7 +159,7 @@ void serverScore(packetServerScore *packet, int socket) {
     
     
     //hide precedente
-    gtk_widget_hide(winAttente);
+    /* gtk_widget_hide(winAttente); */
 
     
     char txt[100];
@@ -172,49 +167,54 @@ void serverScore(packetServerScore *packet, int socket) {
         case 0:
         {
             //il a dénoncer et l'autre n'a rien dit
-             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
+/*              GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100, "Vous n'avez pas été trahis \n Aucune comdamnation");
-            gtk_label_set_text(GTK_LABEL(lblResultat), txt); 
-//            printf("Vous n'avez pas été trahis\n Aucune comdamnation\n");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);  */
+            printf("\e[1;1H\e[2J"); //Clear screen
+            printf("Vous n'avez pas été trahis\n Aucune comdamnation\n");
             break;
         }
         case 6:
         {
             //les 2 n'ont rien dit
-             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
+/*              GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt,100, "Vous n'avez pas été trahis \n Comdamnation : 6 mois");
-            gtk_label_set_text(GTK_LABEL(lblResultat), txt); 
-//            printf("Vous n'avez pas été trahis\n Comdamnation : 6 mois\n");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);  */
+            printf("\e[1;1H\e[2J"); //Clear screen
+            printf("Vous n'avez pas été trahis\n Comdamnation : 6 mois\n");
             break;
         }
         case 5:
         {
             //les 2 ont dénoncer
-            GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
+/*             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt,100, "Vous avez été trahis \n Comdamnation : 5 ans");
-            gtk_label_set_text(GTK_LABEL(lblResultat), txt); 
-//            printf("Vous avez été trahis\nComdamnation : 5 ans\n");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);  */
+            printf("\e[1;1H\e[2J"); //Clear screen
+            printf("Vous avez été trahis\nComdamnation : 5 ans\n");
             break;
         }
         case 10:
         {
             //l'autre à dénnoncé et lui n'a rien dit 
-             GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
+/*              GtkLabel *lblResultat = GTK_LABEL(gtk_builder_get_object(builder, "lblResultat"));
             snprintf(txt, 100,"Vous avez été trahis \n Comdamnation : 10 ans");
-            gtk_label_set_text(GTK_LABEL(lblResultat), txt); 
-//            printf("Vous avez été trahis\nComdamnation : 10 ans\n");
+            gtk_label_set_text(GTK_LABEL(lblResultat), txt);  */
+            printf("\e[1;1H\e[2J"); //Clear screen
+            printf("Vous avez été trahis\nComdamnation : 10 ans\n");
             break;
         }
     }
+    sleep(10);
     ClientWaitingGame(socket);
 
 
-    gtk_builder_connect_signals(builder, NULL);
+/*     gtk_builder_connect_signals(builder, NULL);
     gtk_widget_show(winResultat);
-    gtk_main();
+    gtk_main(); */
     
     //quitter resultat au bout de 10 s
-    clock_t goal = 10000 * CLOCKS_PER_SEC / 10 + clock();
+/*     clock_t goal = 10000 * CLOCKS_PER_SEC / 10 + clock();
     while(goal>clock()){
         
     };
@@ -223,7 +223,7 @@ void serverScore(packetServerScore *packet, int socket) {
     gtk_widget_hide(winResultat);
     //affichag page attente
     gtk_widget_show(winAttente);
-    gtk_main();
+    gtk_main(); */
 }
 
 /**
@@ -232,16 +232,19 @@ void serverScore(packetServerScore *packet, int socket) {
  * 
  * @param packet Paquet reçu de type : packetServerIsThisTheEnd
  */
-void serverIsThisTheEnd(packetServerIsThisTheEnd packet) {
-    switch (packet.gameEnd) {
+void serverIsThisTheEnd(packetServerIsThisTheEnd* packet) {
+    switch (packet->gameEnd) {
         case 1:
         {
-            gtk_main_quit();
+            //gtk_main_quit();
+            printf("\e[1;1H\e[2J"); //Clear screen
+            printf("FIN de l'expérience\nMerci pour votre participation.\n");
+            exit(0);
             break;
         }
         case 0:
         {
-            gtk_main_quit();
+            //gtk_main_quit();
             break;
         }
     }

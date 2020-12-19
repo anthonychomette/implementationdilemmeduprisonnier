@@ -123,7 +123,7 @@ packetServerScore * createPacketServerScore(int score) {
 
     int *type = buffer_in;
 
-    printf("Server received a packet of type %d\n", *type);
+    //printf("Server received a packet of type %d\n", *type);
 
     switch (*type)
     {

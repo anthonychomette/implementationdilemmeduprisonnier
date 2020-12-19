@@ -22,7 +22,6 @@
 
 #include "fichier_confsrv.h"
 #include "fichier_csv.h"
-
 /*
  *
  */
@@ -58,7 +57,7 @@ int main(int argc, char** argv) {
         return -5;
     }
 
-    addGameToPool(4, 8, 4);
+    addGameToPool(4, 8, 2);
 
     printf("ready and listening\n");
 

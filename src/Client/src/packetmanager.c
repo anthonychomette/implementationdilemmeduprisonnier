@@ -99,7 +99,7 @@ void receivePacket(char *buffer_in, int socket) {
 
     int *type = buffer_in;
     
-    printf("Client received a %d packet\n", *type);
+    //printf("Client received a %d packet\n", *type);
 
     switch (*type)
     {
@@ -109,8 +109,6 @@ void receivePacket(char *buffer_in, int socket) {
 
         //Reponse Client : Je suis en attente d'une partie
         ClientWaitingGame(socket);
-        printf("Client send a WaitingGame packet\n");
-
         free(packetSInit);
         break;
     }
@@ -125,21 +123,28 @@ void receivePacket(char *buffer_in, int socket) {
     case 12: {
         packetServerIsPlayerReady *packetSIsPlayerReady= malloc(1 * sizeof(packetServerIsPlayerReady));
         memcpy(packetSIsPlayerReady, buffer_in, sizeof(packetServerIsPlayerReady));
+
         serverIsPlayerReady();
         clientPlayerReady(socket);
+        
         free(packetSIsPlayerReady);
         break;
     }
     case 13: {
         packetServerMakeChoice *packetSMakeChoice = malloc(1 * sizeof(packetServerMakeChoice));
         memcpy(packetSMakeChoice, buffer_in, sizeof(packetServerMakeChoice));
+
         serverMakeChoice(socket);
+
         free(packetSMakeChoice);
         break;
     }
     case 14: {
         packetServerIsThisTheEnd *packetSIsThisTheEnd = malloc(1 * sizeof(packetServerIsThisTheEnd));
         memcpy(packetSIsThisTheEnd, buffer_in, sizeof(packetServerIsThisTheEnd));
+
+        serverIsThisTheEnd(packetSIsThisTheEnd);
+
         free(packetSIsThisTheEnd);
         break;
     }

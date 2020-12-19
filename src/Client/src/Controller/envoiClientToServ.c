@@ -51,7 +51,7 @@ void clientChoiceCollabore(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(0);
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
-    choiceToScore();
+    //choiceToScore();
 }
 
 /**
@@ -62,6 +62,6 @@ void clientChoiceBetray(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(1);
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
-    choiceToScore();
+    //choiceToScore();
 }
 

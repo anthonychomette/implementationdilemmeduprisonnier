@@ -116,10 +116,12 @@ void delGame(game* Game) {
  */
 void addGameToPool(int firstClientID, int secondClientID, int numberOfRound) {
     game* Game;
-    Game = (game *) malloc(sizeof(game*));
+    Game = (game *) malloc(sizeof(game));
     Game->firstOpponentID = firstClientID;
     Game->secondOpponentID = secondClientID;
-    Game->roundNumber = numberOfRound;
+    Game->FirstPlayer = NULL;
+    Game->SecondPlayer = NULL;
+    Game->roundNumber = numberOfRound*2;
     addGame(Game);
 /*     printf("ID DU PREMIER ADV : %d\n", Game->firstOpponentID);
     printf("ID DU SECOND ADV : %d\n", Game->secondOpponentID); */
@@ -132,18 +134,26 @@ void addGameToPool(int firstClientID, int secondClientID, int numberOfRound) {
  */
 void waitGame(game* Game) {
    
-    while(Game->firstPlayerIsReady != true){
+    while (Game->FirstPlayer == NULL) {
+        usleep(1000);
+    }
+
+    while (Game->SecondPlayer == NULL) {
+        usleep(1000);
+    }
+
+    while(Game->FirstPlayer->isReady != true){
         //WaitingPlayer1
         usleep(1000);
     }
-    while(Game->secondPlayerIsReady != true) {
+    while(Game->SecondPlayer->isReady != true) {
         //WaitingPlayer2
         usleep(1000);
     }
 }
 
 /**
- * @brief Cherche une partie pour le joueur donné
+ * @brief Cherche la partie pour le joueur donné
  * 
  * @param player joueur pour lequel chercher la partie correspondante 
  */
@@ -151,12 +161,10 @@ game * searchGame(player *player) {
 
     for (int i = 0; i < 100; i++) {
         if (gamePool[i]->firstOpponentID == player->ID) {
-            printf("Le joueur %d est dans la partie %d\n", player->ID, i);
             player->lobby = i;
             return gamePool[i];
         }
         else if (gamePool[i]->secondOpponentID == player->ID) {
-            printf("Le joueur %d est dans la partie %d\n", player->ID, i);
             player->lobby = i;
             return gamePool[i];
         }
@@ -166,19 +174,12 @@ game * searchGame(player *player) {
 }
 
 /**
- * @brief Place le joueur en attente dans la partie
+ * @brief Place le joueur prêt
  * 
- * @param Game Partie dans la quel placer le joueur en attente
- * @param Player Joueur à mettre en attente
+ * @param Player Joueur à mettre prêt
  */
-void setPlayerReady(game * Game, player * Player) {
-
-    if(Game->firstOpponentID == Player->ID) {
-        Game->firstPlayerIsReady = true;
-    }
-    if(Game->secondOpponentID == Player->ID) {
-        Game->secondPlayerIsReady = true;
-    }
+void setPlayerReady(player * Player) {
+    Player->isReady = true;
 }
 
 /**
@@ -190,25 +191,19 @@ void setPlayerReady(game * Game, player * Player) {
 player * getOpponent(player* Player) {
 
     game* gameToSearchOponent = searchGame(Player);
-    int oponentID = 0;
 
-    if(Player->ID == gameToSearchOponent->firstOpponentID) {
-        oponentID = gameToSearchOponent->secondOpponentID;
+
+    if(Player->ID == gameToSearchOponent->FirstPlayer->ID) {
         //printf ("Le joueur numéro %d a pour adversaire le joueur %d\n", Player->ID, oponentID);
+        return gameToSearchOponent->SecondPlayer;
     }
-    else if(Player->ID == gameToSearchOponent->secondOpponentID){
-        oponentID = gameToSearchOponent->firstOpponentID;
+    else if(Player->ID == gameToSearchOponent->SecondPlayer->ID){
         //printf ("Le joueur numéro %d a pour adversaire le joueur %d\n", Player->ID, oponentID);
+        return gameToSearchOponent->FirstPlayer;
     }
     else{
         perror("No opponent found");
         exit(-1);
-    }
-
-    for (int i = 0; i < 100; i++) {
-        if (playerPool[i]->ID == oponentID) {
-            return playerPool[i];
-        }
     }
 }
 

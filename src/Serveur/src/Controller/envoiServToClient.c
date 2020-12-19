@@ -40,11 +40,15 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
     game* gameToWait = searchGame(Player);
     
     //Se souvenir que le joueur est prêt et attendre l'autre joueur
-    setPlayerReady(gameToWait, Player);
+
+    setPlayerReady(Player);
+
     waitGame(gameToWait);
     
-    if(gamePool[Player->lobby]->roundNumber <=0) { //si il n'y a plus de round
+    usleep(5000);
+    if(gamePool[Player->lobby]->roundNumber <= 0) { //si il n'y a plus de round
         //Envoi du paquet pour terminer la partie
+        printf("Server send a ThisIsTheEnd packet to Client %d\n", Player->ID);
         packetServerIsThisTheEnd *packetSItIsTheEnd = createPacketServerIsThisTheEnd(true);
         write(Player->connection->sockfd, packetSItIsTheEnd, sizeof (packetServerIsThisTheEnd));
         free(packetSItIsTheEnd);
@@ -55,21 +59,20 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
         write(Player->connection->sockfd, packetSWaitingEnd, sizeof (packetServerWaitingEnd));
         printf("Server send a waitingEnd packet to Client %d\n", Player->ID);
         free(packetSWaitingEnd);
+
+
+        //WorkArround Ne pas supprimer !!! 
+        usleep(5000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+        //Envoyer un paquet pour demander si le jouer est prêt
+        serverIsPlayerReady(Player->connection->sockfd);
+        printf("Server send a IsPlayerReady packet to Client %d\n", Player->ID);
     }
 
-
-    //WorkArround Ne pas supprimer !!! 
-    usleep(2000);                  ///La désactivation de l'Algorithme de Nagle ne fonctionne pas !
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     //Remise à zéro de l'attente client
-    gameToWait->firstPlayerIsReady = false;
-    gameToWait->secondPlayerIsReady = false;
-
-    printf("Server send a IsPlayerReady packet to Client %d\n", Player->ID);
-
-    //Envoyer un paquet pour demander si le jouer est prêt
-    serverIsPlayerReady(Player->connection->sockfd);
+    gameToWait->FirstPlayer->isReady = false;
+    gameToWait->SecondPlayer->isReady = false;
 }
 
 /**
@@ -83,8 +86,10 @@ void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerRead
     if(packetCPlayerReady->playerIsReady == true) //Si le joueur est prêt
     {
 
+        printf("Client number %d is ready\n", Player->ID);
+
         //Se souvenir que le joueur est prêt et attendre l'autre joueur
-        setPlayerReady(gamePool[Player->lobby], Player);
+        setPlayerReady(Player);
         waitGame(gamePool[Player->lobby]);
 
         //WorkArround Ne pas supprimer !!! 
@@ -92,8 +97,8 @@ void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerRead
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         //Remise à zéro de l'attente client
-        gamePool[Player->lobby]->firstPlayerIsReady = false;
-        gamePool[Player->lobby]->secondPlayerIsReady = false;
+        gamePool[Player->lobby]->FirstPlayer->isReady = false;
+        gamePool[Player->lobby]->SecondPlayer->isReady = false;
 
 
         //Envoyer le paquet
@@ -115,8 +120,9 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     
     int result = 0;
 
-    printf("Lobby du joueur %d : %d\n", Player->ID, Player->lobby);
-    setPlayerReady(gamePool[Player->lobby], Player); //Stocker le fait quel est prêt
+    printf("Client number %d made a choice\n", Player->ID);
+
+    setPlayerReady(Player); //Stocker le fait quel est prêt
     Player->choice = packetCPlayerChoice->choice; //associé le choix au joueur
     waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
 
@@ -138,19 +144,20 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
         result = 10; //l'autre à dénnoncé et lui n'a rien dit 
     }
 
-    printf("Result = %d\n", result);
-
-    usleep(2000);
+    usleep(5000);
+    
     //Reseting Player lock
-    gamePool[Player->lobby]->firstPlayerIsReady = false;
-    gamePool[Player->lobby]->secondPlayerIsReady = false;
+    gamePool[Player->lobby]->FirstPlayer->isReady = false;
+    gamePool[Player->lobby]->SecondPlayer->isReady = false;
 
+    printf("Server send the score to client number %d\n", Player->ID);
     //Envoi du paquet
     packetServerScore *packetSScore = createPacketServerScore(result);
     write(Player->connection->sockfd, packetSScore, sizeof (packetServerScore));
     free(packetSScore);
 
     gamePool[Player->lobby]->roundNumber--;
+    usleep(5000);
 }
 
 
@@ -186,6 +193,15 @@ void serverInit(player* Player, packetClientInit* packetCInit) {
 
     Player->ID = packetCInit->numClient;
     
+    game* GameToAddPlayer = searchGame(Player);
+    
+    if(GameToAddPlayer->FirstPlayer == NULL) {
+        GameToAddPlayer->FirstPlayer = Player;
+    }
+    else {
+        GameToAddPlayer->SecondPlayer = Player;
+    }
+
     printf("Client %d connected\n", Player->ID);
     packetServerInit *packetSInit = createPacketServerInit();
     write(Player->connection->sockfd, packetSInit, sizeof (packetServerInit));
