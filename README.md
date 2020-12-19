@@ -6,14 +6,14 @@ Le but du projet est d'implementer le dilemme du prisonnier à la demande d'un l
 
 Dans cette expérience, il y a 3 issues possibles :
 
-- Les deux clients collaborent : 6 mois de prison chacun.
-- Le client 1 trahit et le client 2 collabore : client 1 sera relâché et le client 2 aura 10 ans de prison. Inversement dans le meme cas.
-- Les deux clients trahissent : 5 ans de prison chacun.
+- Les deux Joueurs collaborent : 6 mois de prison chacun.
+- Le Joueur 1 trahit et le Joueur 2 collabore : Joueur 1 sera relâché et le client 2 aura 10 ans de prison. Inversement dans le meme cas.
+- Les deux Joeurs trahissent : 5 ans de prison chacun.
 
 
 ## Pour commencer
 
-Le projet est décomposé en deux parties : un serveur et un nombre défini de client qui jouent ensemble.
+Le projet est décomposé en deux parties : un serveur et un nombre défini de clients qui jouent ensemble.
 
 ### Pré-requis
 
@@ -63,7 +63,7 @@ Le port par celui du serveur dans le champ : "port".
 Et enfin l'identifiant client dans le champ : "IdClient"
 
 ## Ex de fichier de config Client
-`
+```
 [owner]
 name=anthony
 organization=cpe
@@ -72,7 +72,7 @@ organization=cpe
 ip=127.0.0.1
 port=7799
 IdClient=8
-`
+```
 
 ## Configurer le Serveur
 
@@ -85,11 +85,11 @@ Le port par celui souhaité dans le champ : "port".
 
 
 ## Ex de fichier de config Serveur
-`
+```
 [Information]
 ip=0.0.0.0
 port=7799
-`
+```
 
 ## Lancer le Client et le Serveur
 
