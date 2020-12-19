@@ -54,3 +54,14 @@ dkms.conf
 #IDE
 .vscode/*
 .vscode
+
+#DOCS
+/src/Client/docs/html/*
+/src/Client/docs/latex/*
+/src/Serveur/docs/html/*
+/src/Serveur/docs/latex/*
+
+/src/Client/docs/html/
+/src/Client/docs/latex/
+/src/Serveur/docs/html/
+/src/Serveur/docs/latex/

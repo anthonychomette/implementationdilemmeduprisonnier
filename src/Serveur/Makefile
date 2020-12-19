@@ -7,7 +7,8 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS	:= -Wall -Wextra -g -lpthread
+CFLAGS	:=  -g -lpthread
+#CFLAGS	:= -Wall -Wextra -g -lpthread
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -89,3 +90,6 @@ clean:
 run: all
 	./$(OUTPUTMAIN)
 	@echo Executing 'run: all' complete!
+
+documentation:
+	@doxygen ./docs/Doxyfile

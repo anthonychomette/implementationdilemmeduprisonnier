@@ -7,7 +7,7 @@
 CC = gcc
 
 # define any compile-time flags
-CFLAGS	:= -Wall -Wextra -g -lpthread
+CFLAGS	:= -Wall -Wextra -g -lpthread `pkg-config --cflags gtk+-3.0 --libs gtk+-3.0` -rdynamic
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -65,6 +65,7 @@ OBJECTS		:= $(SOURCES:.c=.o)
 OUTPUTMAIN	:= $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
 all: $(OUTPUT) $(MAIN)
+	cp src/View output/ -r
 	@echo Executing 'all' complete!
 
 $(OUTPUT):
@@ -89,3 +90,6 @@ clean:
 run: all
 	./$(OUTPUTMAIN)
 	@echo Executing 'run: all' complete!
+
+documentation:
+	@doxygen ./docs/Doxyfile

@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   main.c
  * Author: aurelio
@@ -24,27 +18,47 @@
 
 #include "srvcxnmanager.h"
 
+#include <netinet/tcp.h>
+
+#include "fichier_confsrv.h"
+#include "fichier_csv.h"
 /*
  *
  */
 
+//int newSocket = 0;
+player* playerPool[100];
+game* gamePool[100];
+configuration* serveurInfos;
+
+/**
+ * @brief Fonction principale du serveur
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
 int main(int argc, char** argv) {
+
     int sockfd = -1;
     int index = 1;
     connection_t *connection;
     pthread_t thread;
-
-
+    serveurInfos = config();
+    //csvFile();
+    //csvWriteAndRead();
     /* init array*/
     init_sockets_array();
     /* create socket */
     sockfd = create_server_socket();
-
+    
     /* listen on port , stack size 50 for incoming connections*/
     if (listen(sockfd, 50) < 0) {
         fprintf(stderr, "%s: error: cannot listen on port\n", argv[0]);
         return -5;
     }
+
+    addGameToPool(4, 8, 2); //Rajoute une partie dans le Serveur : ICI Client 4 contre Client 8 avec deux rounds
 
     printf("ready and listening\n");
 
@@ -57,11 +71,16 @@ int main(int argc, char** argv) {
         if (connection->sockfd <= 0) {
             free(connection);
         } else {
+
+            player* newPlayer;
+            newPlayer = (player *) malloc(sizeof(player*));
+            newPlayer->connection = connection;
+            
             /* start a new thread but do not wait for it */
-            pthread_create(&thread, 0, threadProcess, (void *) connection);
+            pthread_create(&thread, 0, threadProcess, (void *) newPlayer);
             pthread_detach(thread);
         }
     }
+
     return (EXIT_SUCCESS);
 }
-
