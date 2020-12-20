@@ -11,6 +11,7 @@
 #include "../packetmanager.h"
 #include "envoiClientToServ.h"
 #include "receptionServToClient.h"
+#include <assert.h>
 
 /**
  * @brief Envoi du paquet : informations du client
@@ -19,6 +20,9 @@
  */
 void clientInitClient(int sockfd, int clientID) {
     packetClientInit *packetCInit = createPacketClientInit(clientID);
+
+    assert(packetCInit->type == 1);
+
     write(sockfd, packetCInit, sizeof (packetCInit));
     free(packetCInit);
 }
@@ -29,6 +33,9 @@ void clientInitClient(int sockfd, int clientID) {
  */
 void ClientWaitingGame(int sockfd) {
     packetClientWaitingGame *packetWaiting = createPacketClientWaitingGame();
+
+    assert(packetWaiting->type == 2);
+
     write(sockfd, packetWaiting, sizeof(packetWaiting));
     free(packetWaiting);
 }
@@ -39,6 +46,9 @@ void ClientWaitingGame(int sockfd) {
  */
 void clientPlayerReady(int sockfd) {
     packetClientPlayerReady *packetCPlayerReady = createPacketClientPlayerReady();
+
+    assert(packetCPlayerReady->type == 3);
+
     write(sockfd, packetCPlayerReady, sizeof (packetCPlayerReady));
     free(packetCPlayerReady);
 }
@@ -49,6 +59,9 @@ void clientPlayerReady(int sockfd) {
  */
 void clientChoiceCollabore(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(0);
+
+    assert(packetCPlayerChoice->type == 4);
+
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
     //choiceToScore();
@@ -60,6 +73,9 @@ void clientChoiceCollabore(int sockfd) {
  */
 void clientChoiceBetray(int sockfd) {
     packetClientPlayerChoice *packetCPlayerChoice = createPacketClientPlayerChoice(1);
+
+    assert(packetCPlayerChoice->type == 4);
+    
     write(sockfd, packetCPlayerChoice, sizeof (packetCPlayerChoice));
     free(packetCPlayerChoice);
     //choiceToScore();

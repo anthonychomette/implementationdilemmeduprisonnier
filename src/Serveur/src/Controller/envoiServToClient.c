@@ -16,6 +16,7 @@
 #include "../srvcxnmanager.h"
 #include "receptionClientToServ.h"
 #include <unistd.h>
+#include <assert.h>
 
 /**
  * @brief Envoi un paquet pour demander si le client est pret
@@ -24,6 +25,9 @@
  */
 void serverIsPlayerReady(int sockfd) {
     packetServerIsPlayerReady *packetSIsPlayerReady = createPacketServerIsPlayerReady();
+
+    assert(packetSIsPlayerReady->type == 12);
+
     write(sockfd, packetSIsPlayerReady, sizeof (packetSIsPlayerReady));
     free(packetSIsPlayerReady);
 }
@@ -50,6 +54,9 @@ void serverWaitingEnd(player* Player, packetClientWaitingGame* packetCWaitingGam
         //Envoi du paquet pour terminer la partie
         printf("Server send a ThisIsTheEnd packet to Client %d\n", Player->ID);
         packetServerIsThisTheEnd *packetSItIsTheEnd = createPacketServerIsThisTheEnd(true);
+
+        assert(packetSItIsTheEnd->type == 14);
+
         write(Player->connection->sockfd, packetSItIsTheEnd, sizeof (packetServerIsThisTheEnd));
         free(packetSItIsTheEnd);
     }
@@ -90,6 +97,8 @@ void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerRead
 
         //Se souvenir que le joueur est prêt et attendre l'autre joueur
         setPlayerReady(Player);
+        
+        assert(Player->lobby != -1);
         waitGame(gamePool[Player->lobby]);
 
         //WorkArround Ne pas supprimer !!! 
@@ -103,6 +112,9 @@ void serverMakeChoice(player* Player, packetClientPlayerReady* packetCPlayerRead
 
         //Envoyer le paquet
         packetServerMakeChoice *packetSMakeChoice = createPacketServerMakeChoice();
+
+        assert(packetSMakeChoice->type == 13);
+
         write(Player->connection->sockfd, packetSMakeChoice, sizeof (packetServerMakeChoice));
         printf("Server send a MakeChoice packet to Client %d\n", Player->ID);
         free(packetSMakeChoice);
@@ -124,6 +136,7 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
 
     setPlayerReady(Player); //Stocker le fait quel est prêt
     Player->choice = packetCPlayerChoice->choice; //associé le choix au joueur
+    assert(Player->lobby != -1);
     waitGame(gamePool[Player->lobby]); //Attendre l'autre joueur
 
     player* Opponent = getOpponent(Player); //recupérer l'autre joueur
@@ -147,15 +160,20 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
     usleep(5000);
     
     //Reseting Player lock
+    assert(Player->lobby != -1);
     gamePool[Player->lobby]->FirstPlayer->isReady = false;
     gamePool[Player->lobby]->SecondPlayer->isReady = false;
 
     printf("Server send the score to client number %d\n", Player->ID);
     //Envoi du paquet
     packetServerScore *packetSScore = createPacketServerScore(result);
+
+    assert(packetSScore->type == 15);
+
     write(Player->connection->sockfd, packetSScore, sizeof (packetServerScore));
     free(packetSScore);
 
+    assert(Player->lobby != -1);
     gamePool[Player->lobby]->roundNumber--;
     usleep(5000);
 }
@@ -168,6 +186,9 @@ void serverScore(player* Player, packetClientPlayerChoice* packetCPlayerChoice) 
  */
 void serverIsThisTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(1);
+
+    assert(packetSIsThisTheEnd->type == 14);
+
     write(sockfd, packetSIsThisTheEnd, sizeof (packetServerIsThisTheEnd));
     free(packetSIsThisTheEnd);
 }
@@ -179,6 +200,9 @@ void serverIsThisTheEnd(int sockfd) {
  */
 void serverItIsNotTheEnd(int sockfd) {
     packetServerIsThisTheEnd *packetSIsThisTheEnd = createPacketServerIsThisTheEnd(0);
+
+    assert(packetSIsThisTheEnd->type == 14);
+
     write(sockfd, packetSIsThisTheEnd, sizeof (packetServerIsThisTheEnd));
     free(packetSIsThisTheEnd);
 }
@@ -204,6 +228,10 @@ void serverInit(player* Player, packetClientInit* packetCInit) {
 
     printf("Client %d connected\n", Player->ID);
     packetServerInit *packetSInit = createPacketServerInit();
+
+    assert(packetCInit->type == 1);
+    assert(packetSInit->type == 10);
+
     write(Player->connection->sockfd, packetSInit, sizeof (packetServerInit));
     printf("Server send an ack to client %d\n", Player->ID);
     free(packetSInit);
