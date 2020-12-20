@@ -107,6 +107,22 @@ Pour l'éxécuter : `./Client.out`
 **Attention pour tester le Serveur Utiliser le client 4 et le client 8 !!!**
 Pour cela utiliser deux client avec comme identifiant : 4 et 8.
 
+
+## Générer la documentation
+
+Client :
+```
+cd /implementationdilemmeduprisonnier/src/Client
+make documentation
+```
+
+Serveur :
+```
+cd /implementationdilemmeduprisonnier/src/Serveur
+make documentation
+```
+
+
 ## Auteurs
 
 - Noëline Miet 
