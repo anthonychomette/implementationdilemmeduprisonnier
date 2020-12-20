@@ -51,6 +51,7 @@ configuration* config(){
 
     if (ini_parse("Fichier_conf.ini", handler, config) < 0) {
         printf("Can't load 'Fichier_conf.ini'\n");
+        printf("Merci de lancer ce serveur dans le dossier de son exécutable !\n");
         return;
     }
     printf("Config loaded from 'Fichier_conf.ini': ip=%s, port=%s\n", config->ip, config->port);

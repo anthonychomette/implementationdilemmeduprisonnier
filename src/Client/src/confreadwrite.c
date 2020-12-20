@@ -45,6 +45,7 @@ configuration * config(){
     
     if (ini_parse("./conf.ini", handler,Configuration) < 0) {
         printf ("Cant't load 'conf.ini'\n");
+        printf("Merci de lancer ce client dans le dossier de son exécutable !\n");
         return;
     }
 
